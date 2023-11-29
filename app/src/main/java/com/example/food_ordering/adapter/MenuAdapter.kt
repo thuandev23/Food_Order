@@ -2,28 +2,27 @@ package com.example.food_ordering.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.food_ordering.DetailsActivity
 import com.example.food_ordering.databinding.MenuItemBinding
+import com.example.food_ordering.model.AllItemMenu
 
 class MenuAdapter(
-    private val menuItemsName: MutableList<String>,
-    private val menuItemsPrice: List<String>,
-    private val menuItemsImage: List<Int>,
+    private val menuItems: List<AllItemMenu>,
     private val requireContext: Context
 ):RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
-
-    private val itemClickListener: OnClickListener ?= null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         val binding = MenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MenuViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = menuItemsName.size
+    override fun getItemCount(): Int = menuItems.size
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(position)
@@ -33,30 +32,33 @@ class MenuAdapter(
            binding.root.setOnClickListener {
                val position = adapterPosition
                if (position!= RecyclerView.NO_POSITION){
-                   itemClickListener?.onItemClick(position)
+                   openDetailsActivity(position)
                }
-
-               // selection item-details
-               val intent = Intent(requireContext, DetailsActivity::class.java)
-               intent.putExtra("MenuItemName", menuItemsName.get(position))
-               intent.putExtra("MenuItemImage",menuItemsImage.get(position))
-                requireContext.startActivity(intent)
            }
        }
-        fun bind(position: Int) {
-             binding.apply {
-                foodNamePopularMenu.text= menuItemsName[position]
-                 foodPricePopularMenu.text = menuItemsPrice[position]
-                 imgFoodPopularMenu.setImageResource(menuItemsImage[position])
 
+        private fun openDetailsActivity(position: Int) {
+            val menuItem = menuItems[position]
+            val intent = Intent(requireContext, DetailsActivity::class.java).apply {
+                putExtra("menuItemName", menuItem.foodName)
+                putExtra("menuItemPrice", menuItem.foodPrice)
+                putExtra("menuItemDescription", menuItem.foodDescription)
+                putExtra("menuItemImage", menuItem.foodImage)
+                putExtra("menuItemIngredient", menuItem.foodIngredient)
+            }
+            requireContext.startActivity(intent)
+        }
+
+        fun bind(position: Int) {
+            val menuItem = menuItems[position]
+             binding.apply {
+                foodNamePopularMenu.text= menuItem.foodName
+                 foodPricePopularMenu.text = menuItem.foodPrice
+                 val uri = Uri.parse(menuItem.foodImage)
+                 Glide.with(requireContext).load(uri).into(imgFoodPopularMenu)
              }
         }
 
-    }
-    interface OnClickListener{
-        fun onItemClick(position: Int) {
-
-        }
     }
 }
 
