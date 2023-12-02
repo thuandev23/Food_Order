@@ -73,6 +73,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/foodPricePopularMenu"
                 app:layout_constraintStart_toStartOf="@+id/foodPricePopularMenu"
                 app:layout_constraintTop_toBottomOf="@+id/foodPricePopularMenu" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VNĐ"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                app:layout_constraintBottom_toBottomOf="@+id/foodPricePopularMenu"
+                app:layout_constraintStart_toEndOf="@+id/foodPricePopularMenu"
+                app:layout_constraintTop_toTopOf="@+id/foodPricePopularMenu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

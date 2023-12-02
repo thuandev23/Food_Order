@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <androidx.cardview.widget.CardView
         android:layout_width="380dp"
@@ -73,6 +73,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/foodPricePopular"
                 app:layout_constraintStart_toStartOf="@+id/foodPricePopular"
                 app:layout_constraintTop_toBottomOf="@+id/foodPricePopular" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VNĐ"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                app:layout_constraintBottom_toBottomOf="@+id/foodPricePopular"
+                app:layout_constraintStart_toEndOf="@+id/foodPricePopular"
+                app:layout_constraintTop_toTopOf="@+id/foodPricePopular" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
