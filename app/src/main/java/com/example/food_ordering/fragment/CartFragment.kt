@@ -79,6 +79,8 @@ class CartFragment : Fragment() {
                     orderItems?.foodIngredient?.let { foodIngredient.add(it) }
                     orderItems?.foodQuantities?.let { foodQuantities.add(it) }
                 }
+
+
                 orderNow(foodName,foodPrice,foodImage,foodDescription,foodIngredient,foodQuantities)
             }
 

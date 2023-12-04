@@ -18,6 +18,7 @@ class DetailsActivity : AppCompatActivity() {
     private var foodDescription: String? = null
     private var foodImage: String? = null
     private var foodIngredient: String? = null
+    private var foodQuantity:String ? = null
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,8 @@ class DetailsActivity : AppCompatActivity() {
             foodPrice.toString(),
             foodDescription.toString(),
             foodImage.toString(),
-            foodIngredient.toString()
+            foodIngredient.toString(),
+            1
         )
         database.child("user").child(userId).child("CartItems").push().setValue(cartItem)
             .addOnSuccessListener {

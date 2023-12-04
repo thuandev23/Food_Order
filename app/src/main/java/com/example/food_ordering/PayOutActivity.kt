@@ -1,26 +1,27 @@
 package com.example.food_ordering
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.food_ordering.adapter.CartAdapter
+import android.widget.Toast
 import com.example.food_ordering.databinding.ActivityPayOutBinding
-import com.example.food_ordering.databinding.FragmentCartBinding
-import com.example.food_ordering.fragment.CartFragment
 import com.example.food_ordering.fragment.CongratsBottomFragment
+import com.example.food_ordering.model.OrderDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.net.Inet4Address
+import com.google.firestore.v1.StructuredQuery.Order
 
 class PayOutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPayOutBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var name: String
+    private lateinit var address: String
+    private lateinit var phone: String
     private lateinit var totalAmount: String
     private lateinit var foodItemsName: ArrayList<String>
     private lateinit var foodItemPrices: ArrayList<String>
@@ -28,6 +29,7 @@ class PayOutActivity : AppCompatActivity() {
     private lateinit var foodDescription: ArrayList<String>
     private lateinit var foodIngredient: ArrayList<String>
     private lateinit var foodQuantity: ArrayList<Int>
+    private lateinit var userId:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPayOutBinding.inflate(layoutInflater)
@@ -54,14 +56,52 @@ class PayOutActivity : AppCompatActivity() {
         binding.totalAmount.setText(totalAmount)
 
         binding.btnPlaceMyOrder.setOnClickListener {
-            val bottomSheetDialog = CongratsBottomFragment()
-            bottomSheetDialog.show(supportFragmentManager, "Test")
+            // get data from text view
+            name = binding.name.text.toString().trim()
+            address = binding.address.text.toString().trim()
+            phone = binding.phone.text.toString().trim()
+            if(name.isBlank() && address.isBlank() && phone.isBlank()){
+                Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
+            }else{
+                placeOrder()
+            }
         }
         binding.btnBackPayout.setOnClickListener {
             finish()
         }
     }
-        // khi nhấn process thì bị văng ra -> lỗi chỗ quantity
+
+    private fun placeOrder() {
+        userId = auth.currentUser?.uid?:""
+        val time = System.currentTimeMillis()
+        val itemPushKey = databaseReference.child("OrderDetails").push().key
+        val orderDetails = OrderDetails(userId, name, foodItemsName, foodItemPrices,foodImage, foodQuantity, address, phone, time, itemPushKey, false, false)
+
+        val orderReference = databaseReference.child("OrderDetails").child(itemPushKey!!)
+        orderReference.setValue(orderDetails).addOnSuccessListener {
+            val bottomSheetDialog = CongratsBottomFragment()
+            bottomSheetDialog.show(supportFragmentManager, "Test")
+            removeItemFromCart()
+            adOrderToHistory(orderDetails)
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed to order", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun adOrderToHistory(orderDetails: OrderDetails) {
+        databaseReference.child("user").child(userId).child("BuyHistory")
+            .child(orderDetails.itemPushKey!!)
+            .setValue(orderDetails).addOnSuccessListener {
+
+            }.addOnFailureListener {
+
+            }
+    }
+
+    private fun removeItemFromCart() {
+        val cartItemsReference = databaseReference.child("user").child(userId).child("CartItems")
+        cartItemsReference.removeValue()
+    }
     private fun calculateTotalAmount(): Int {
         var totalAmount = 0
         if (foodItemPrices.isNotEmpty()) {
@@ -73,9 +113,8 @@ class PayOutActivity : AppCompatActivity() {
                 } else {
                     price.replace(",", "").toInt()
                 }
-                // khi comment lại thì không bị lỗi nhưng không thể nhân với số lượng khi tổng tiền
-                //var quantity = foodQuantity[i]
-                totalAmount += priceIntVale
+                var quantity = foodQuantity[i]
+                totalAmount += priceIntVale* quantity
             }
         }
         return totalAmount

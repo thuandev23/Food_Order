@@ -31,7 +31,7 @@ class CartAdapter(
         val database = FirebaseDatabase.getInstance()
         val userId = auth.currentUser?.uid ?: ""
         val cartItemsNumber = cartItems.size
-        itemQuantities = IntArray(cartItems.size) { 1 }
+        itemQuantities = IntArray(cartItemsNumber) { 1 }
         cartItemsReference = database.reference.child("user").child(userId).child("CartItems")
     }
 
@@ -73,16 +73,14 @@ class CartAdapter(
         private fun decreaseQuantity(position: Int) {
             if (itemQuantities[position] > 1) {
                 itemQuantities[position]--
-//                cartQuantity[position] = itemQuantities[position]
+                cartQuantity[position] = itemQuantities[position]
                 binding.countItemCart.text = itemQuantities[position].toString()
             }
         }
-        /*nếu thêm vào như này thì vẫn bị lỗi
-        cartQuantity[position] = itemQuantities[position]*/
         private fun increaseQuantity(position: Int) {
             if (itemQuantities[position] < 10) {
                 itemQuantities[position]++
-//                cartQuantity[position] = itemQuantities[position]
+                cartQuantity[position] = itemQuantities[position]
                 binding.countItemCart.text = itemQuantities[position].toString()
             }
         }
