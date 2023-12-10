@@ -42,8 +42,7 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="@font/lato"
-            android:inputType="textMultiLine"
-            android:text="Admin permission" />
+            android:inputType="textMultiLine" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,8 +73,7 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="@font/lato"
-            android:inputType="textMultiLine"
-            android:text="Lorem ipsum is placeholder text  commonly used in the graphic,  print, and publishing industries  for previewing layouts and visual " />
+            android:inputType="textMultiLine" />
     </LinearLayout>
 
     <LinearLayout
@@ -106,8 +104,7 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="@font/lato"
-            android:inputType="textMultiLine"
-            android:text="Admin123@gmail.com" />
+            android:inputType="textMultiLine" />
     </LinearLayout>
 
     <LinearLayout
@@ -138,8 +135,7 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="@font/lato"
-            android:inputType="numberDecimal"
-            android:text="0393332493" />
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
 

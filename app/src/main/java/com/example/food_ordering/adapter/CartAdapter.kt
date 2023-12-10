@@ -2,6 +2,7 @@ package com.example.food_ordering.adapter
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -31,7 +32,7 @@ class CartAdapter(
         val database = FirebaseDatabase.getInstance()
         val userId = auth.currentUser?.uid ?: ""
         val cartItemsNumber = cartItems.size
-        itemQuantities = IntArray(cartItemsNumber) { 1 }
+        itemQuantities = IntArray(cartItems.size) { 1 }
         cartItemsReference = database.reference.child("user").child(userId).child("CartItems")
     }
 
@@ -116,6 +117,7 @@ class CartAdapter(
 
                         notifyItemRemoved(position)
                         notifyItemRangeChanged(position, cartItems.size)
+
                     }
                 }.addOnFailureListener {
                     Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show()

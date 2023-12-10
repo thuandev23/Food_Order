@@ -30,7 +30,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/lato_bold"
                 android:text="Food Name"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/buyAgainFoodPrice"
                 app:layout_constraintStart_toEndOf="@+id/buyAgainFoodImage"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +50,7 @@
                 android:id="@+id/buyAgainFoodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$5"
+                android:text="1231244"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -61,15 +60,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBuyAgain"
                 android:layout_width="85dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="32dp"
+                android:background="@drawable/addtocartshape"
+                android:fontFamily="@font/yeon_sung"
                 android:text="Buy Again"
                 android:textAllCaps="false"
-                android:textSize="14sp"
-                android:fontFamily="@font/yeon_sung"
-                android:background="@drawable/addtocartshape"
                 android:textColor="@color/white"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -78,11 +78,12 @@
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/lato"
                 android:text="VNĐ"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/lato"
                 app:layout_constraintBottom_toBottomOf="@+id/buyAgainFoodPrice"
                 app:layout_constraintStart_toEndOf="@+id/buyAgainFoodPrice"
                 app:layout_constraintTop_toTopOf="@+id/buyAgainFoodPrice" />

@@ -47,26 +47,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="70dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/lato"
-                android:text="5"
+                android:text="5123124"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView21"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/lato"
                 android:text="VNĐ"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/foodPriceRecentBuy"
-                app:layout_constraintStart_toEndOf="@+id/foodPriceRecentBuy"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/foodPriceRecentBuy" />
 
             <TextView
@@ -75,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/lato"
-                android:text="quantity: "
+                android:text="Quantity: "
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/foodNameRecentBuy"
@@ -88,6 +89,7 @@
                 android:fontFamily="@font/lato"
                 android:text="8"
                 android:textColor="@color/textColor"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView27"
                 app:layout_constraintStart_toEndOf="@+id/textView27"

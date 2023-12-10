@@ -73,31 +73,29 @@
                     app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView5"
+                    android:id="@+id/orderStatus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="32dp"
-                    app:cardBackgroundColor="@color/textColor"
+                    app:cardBackgroundColor="#A6B5AE"
                     app:cardCornerRadius="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <Button
                     android:id="@+id/btnReceived"
-                    android:layout_width="60dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/addtocartshape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/yeon_sung"
                     android:text="Received"
+                    android:backgroundTint="@color/textColor"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView5"
-                    app:layout_constraintStart_toStartOf="@+id/cardView5"
-                    app:layout_constraintTop_toBottomOf="@id/cardView5" />
+                    app:layout_constraintEnd_toEndOf="@+id/orderStatus"
+                    app:layout_constraintStart_toStartOf="@+id/orderStatus"
+                    app:layout_constraintTop_toBottomOf="@id/orderStatus" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -123,7 +121,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,6 +2,7 @@ package com.example.food_ordering.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class CartFragment : Fragment() {
     private lateinit var cartImages: MutableList<String>
     private lateinit var cartDescription: MutableList<String>
     private lateinit var cartIngredient: MutableList<String>
-    private lateinit var cartQuantity: MutableList<Int>
+    private lateinit var quantity: MutableList<Int>
     private lateinit var cartAdapter:CartAdapter
     private lateinit var userId: String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,7 @@ class CartFragment : Fragment() {
     }
 
     private fun getOrderCartItems() {
-        val orderReference:DatabaseReference = database.reference.child("user").child(userId).child("CartItems")
+        val orderIdReference:DatabaseReference = database.reference.child("user").child(userId).child("CartItems")
         val foodName = mutableListOf<String>()
         val foodPrice = mutableListOf<String>()
         val foodImage = mutableListOf<String>()
@@ -65,8 +66,7 @@ class CartFragment : Fragment() {
         // get item quantities
         val foodQuantities = cartAdapter.getUpdateItemsQuantities()
 
-
-        orderReference.addListenerForSingleValueEvent(object : ValueEventListener{
+        orderIdReference.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(foodSnapshot in snapshot.children){
                     //get the cartItems to respective list
@@ -77,13 +77,9 @@ class CartFragment : Fragment() {
                     orderItems?.foodImage?.let { foodImage.add(it) }
                     orderItems?.foodDescription?.let { foodDescription.add(it) }
                     orderItems?.foodIngredient?.let { foodIngredient.add(it) }
-                    orderItems?.foodQuantities?.let { foodQuantities.add(it) }
                 }
-
-
                 orderNow(foodName,foodPrice,foodImage,foodDescription,foodIngredient,foodQuantities)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(requireContext(), "Order making failed. Please try again", Toast.LENGTH_SHORT).show()
             }
@@ -120,7 +116,7 @@ class CartFragment : Fragment() {
         cartImages = mutableListOf()
         cartDescription = mutableListOf()
         cartIngredient = mutableListOf()
-        cartQuantity = mutableListOf()
+        quantity = mutableListOf()
 
         //fetch data form the database
         foodReference.addListenerForSingleValueEvent(object :ValueEventListener{
@@ -133,15 +129,26 @@ class CartFragment : Fragment() {
                     cartItems?.foodImage?.let { cartImages.add(it) }
                     cartItems?.foodDescription?.let { cartDescription.add(it) }
                     cartItems?.foodIngredient?.let { cartIngredient.add(it) }
-                    cartItems?.foodQuantities?.let { cartQuantity.add(it) }
-                }
-                setAdapter()
-            }
+                    cartItems?.foodQuantities?.let { quantity.add(it) }
 
+                }
+                    setAdapter()
+            }
+            // Trong hàm setAdapter() của CartFragment
             private fun setAdapter() {
-                cartAdapter = CartAdapter(requireContext(), cartItemsName, cartItemPrices,cartImages,cartDescription,cartIngredient,cartQuantity)
-                binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                binding.cartRecyclerView.adapter = cartAdapter
+                if (cartItemsName.isEmpty()) {
+                    binding.cartRecyclerView.visibility = View.GONE
+                    binding.btnProcessCart.visibility = View.GONE
+                    binding.emptyLayout.visibility = View.VISIBLE
+                } else {
+                    binding.cartRecyclerView.visibility = View.VISIBLE
+                    binding.btnProcessCart.visibility = View.VISIBLE
+                    binding.emptyLayout.visibility = View.GONE
+
+                    cartAdapter = CartAdapter(requireContext(), cartItemsName, cartItemPrices, cartImages, cartDescription, cartIngredient, quantity)
+                    binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    binding.cartRecyclerView.adapter = cartAdapter
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -149,9 +156,5 @@ class CartFragment : Fragment() {
             }
 
         })
-    }
-
-    companion object {
-
     }
 }

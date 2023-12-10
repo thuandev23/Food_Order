@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.food_ordering.R
 import com.example.food_ordering.databinding.FragmentProfileBinding
 import com.example.food_ordering.model.UserModel
@@ -55,6 +56,8 @@ class ProfileFragment : Fragment() {
             )
             userReference.setValue(userData).addOnSuccessListener {
                 Toast.makeText(requireContext(), "Profile update successfully !", Toast.LENGTH_SHORT).show()
+                val navController = findNavController()
+                navController.popBackStack(R.id.homeFragment, false)
             }.addOnFailureListener {
                 Toast.makeText(requireContext(), "Profile update failed !", Toast.LENGTH_SHORT).show()
             }

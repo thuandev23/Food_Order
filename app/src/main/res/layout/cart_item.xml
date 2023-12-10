@@ -38,7 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/lato"
                 android:text="TextView"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imageFoodCart"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="TextView"
+                android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageFoodCart"
                 app:layout_constraintTop_toBottomOf="@+id/cartFoodName" />
@@ -99,10 +102,12 @@
                 android:id="@+id/textView25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/lato"
                 android:text="VNĐ"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"
-                android:fontFamily="@font/lato"
                 app:layout_constraintBottom_toBottomOf="@+id/cartPrice"
                 app:layout_constraintStart_toEndOf="@+id/cartPrice"
                 app:layout_constraintTop_toTopOf="@+id/cartPrice" />

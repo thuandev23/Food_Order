@@ -38,8 +38,9 @@ class OrderDetails(): Serializable {
         foodItemsName: ArrayList<String>,
         foodItemPrices: ArrayList<String>,
         foodImage: ArrayList<String>,
-        foodQuantity: ArrayList<Int>,
+        foodQuantities: ArrayList<Int>,
         address: String,
+        totalAmount:String,
         phone: String,
         time: Long,
         itemPushKey: String?,
@@ -51,10 +52,11 @@ class OrderDetails(): Serializable {
         this.foodNames = foodItemsName
         this.foodPrices = foodItemPrices
         this.foodImages = foodImage
-        this.foodQuantities = foodQuantity
+        this.foodQuantities = foodQuantities
         this.address = address
         this.phoneNumber = phone
         this.currentTime = time
+        this.totalPrice = totalAmount
         this.itemPushKey = itemPushKey
         this.orderAccepted = orderAccepted
         this.paymentReceived = paymentReceived

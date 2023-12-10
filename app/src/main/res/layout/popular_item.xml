@@ -47,15 +47,14 @@
                 android:id="@+id/foodPricePopular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="160dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/lato"
-                android:text="5$"
+                android:text="12312312"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgFoodPopular"
+                app:layout_constraintEnd_toStartOf="@+id/textView21"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -78,13 +77,14 @@
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/lato"
                 android:text="VNĐ"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/lato"
                 app:layout_constraintBottom_toBottomOf="@+id/foodPricePopular"
-                app:layout_constraintStart_toEndOf="@+id/foodPricePopular"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/foodPricePopular" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

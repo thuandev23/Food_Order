@@ -28,8 +28,8 @@ class PayOutActivity : AppCompatActivity() {
     private lateinit var foodImage: ArrayList<String>
     private lateinit var foodDescription: ArrayList<String>
     private lateinit var foodIngredient: ArrayList<String>
-    private lateinit var foodQuantity: ArrayList<Int>
-    private lateinit var userId:String
+    private lateinit var foodQuantities: ArrayList<Int>
+    private lateinit var userId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPayOutBinding.inflate(layoutInflater)
@@ -49,8 +49,7 @@ class PayOutActivity : AppCompatActivity() {
         foodImage = intent.getStringArrayListExtra("foodImage") as ArrayList<String>
         foodDescription = intent.getStringArrayListExtra("foodDescription") as ArrayList<String>
         foodIngredient = intent.getStringArrayListExtra("foodIngredient") as ArrayList<String>
-        foodQuantity = intent.getIntegerArrayListExtra("foodQuantities") as ArrayList<Int>
-
+        foodQuantities = intent.getIntegerArrayListExtra("foodQuantities") as ArrayList<Int>
         totalAmount = calculateTotalAmount().toString() + "$"
         binding.totalAmount.isEnabled = false
         binding.totalAmount.setText(totalAmount)
@@ -60,9 +59,9 @@ class PayOutActivity : AppCompatActivity() {
             name = binding.name.text.toString().trim()
             address = binding.address.text.toString().trim()
             phone = binding.phone.text.toString().trim()
-            if(name.isBlank() && address.isBlank() && phone.isBlank()){
+            if (name.isBlank() && address.isBlank() && phone.isBlank()) {
                 Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 placeOrder()
             }
         }
@@ -72,17 +71,31 @@ class PayOutActivity : AppCompatActivity() {
     }
 
     private fun placeOrder() {
-        userId = auth.currentUser?.uid?:""
+        userId = auth.currentUser?.uid ?: ""
         val time = System.currentTimeMillis()
         val itemPushKey = databaseReference.child("OrderDetails").push().key
-        val orderDetails = OrderDetails(userId, name, foodItemsName, foodItemPrices,foodImage, foodQuantity, address, phone, time, itemPushKey, false, false)
 
+        val orderDetails = OrderDetails(
+            userId,
+            name,
+            foodItemsName,
+            foodItemPrices,
+            foodImage,
+            foodQuantities,
+            address,
+            totalAmount,
+            phone,
+            time,
+            itemPushKey,
+            false,
+            false
+        )
         val orderReference = databaseReference.child("OrderDetails").child(itemPushKey!!)
         orderReference.setValue(orderDetails).addOnSuccessListener {
             val bottomSheetDialog = CongratsBottomFragment()
             bottomSheetDialog.show(supportFragmentManager, "Test")
-            removeItemFromCart()
             adOrderToHistory(orderDetails)
+            removeItemFromCart()
         }.addOnFailureListener {
             Toast.makeText(this, "Failed to order", Toast.LENGTH_SHORT).show()
         }
@@ -102,20 +115,19 @@ class PayOutActivity : AppCompatActivity() {
         val cartItemsReference = databaseReference.child("user").child(userId).child("CartItems")
         cartItemsReference.removeValue()
     }
+
     private fun calculateTotalAmount(): Int {
         var totalAmount = 0
-        if (foodItemPrices.isNotEmpty()) {
-            for (i in 0 until foodItemPrices.size) {
-                var price = foodItemPrices[i]
-                val lastChar = price.last()
-                val priceIntVale = if (lastChar == '$') {
-                    price.dropLast(1).replace(",", "").toInt()
-                } else {
-                    price.replace(",", "").toInt()
-                }
-                var quantity = foodQuantity[i]
-                totalAmount += priceIntVale* quantity
+        for (i in 0 until foodItemPrices.size) {
+            var price = foodItemPrices[i]
+            val lastChar = price.last()
+            val priceIntVale = if (lastChar == '$') {
+                price.dropLast(1).replace(",", "").toInt()
+            } else {
+                price.replace(",", "").toInt()
             }
+            var quantity = foodQuantities[i]
+            totalAmount += priceIntVale * quantity
         }
         return totalAmount
     }

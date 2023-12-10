@@ -14,7 +14,7 @@ class RecentOrderItemsActivity : AppCompatActivity() {
     private lateinit var allFoodNameList: ArrayList<String>
     private lateinit var allFoodImageList: ArrayList<String>
     private lateinit var allFoodPriceList: ArrayList<String>
-//    private lateinit var allFoodQuantityList: ArrayList<Int>
+    private lateinit var allFoodQuantityList: ArrayList<Int>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -26,11 +26,10 @@ class RecentOrderItemsActivity : AppCompatActivity() {
         recentOrderItems?.let { orderDetails ->
             if (orderDetails.isNotEmpty()) {
                 val recentOrderItem = orderDetails[0]
-
                 allFoodNameList = recentOrderItem.foodNames as ArrayList<String>
                 allFoodImageList = recentOrderItem.foodImages as ArrayList<String>
                 allFoodPriceList = recentOrderItem.foodPrices as ArrayList<String>
-//                allFoodQuantityList = recentOrderItem.foodQuantities as ArrayList<Int>
+                allFoodQuantityList = recentOrderItem.foodQuantities as ArrayList<Int>
             }
 
         }
@@ -40,8 +39,7 @@ class RecentOrderItemsActivity : AppCompatActivity() {
     private fun setAdapter() {
         val rv = binding.recentBuyRecyclerView
         rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = RecentBuyAdapter(this, allFoodNameList, allFoodImageList, allFoodPriceList)
-//        rv.adapter = RecentBuyAdapter(this, allFoodNameList, allFoodImageList, allFoodPriceList,allFoodQuantityList)
+        rv.adapter = RecentBuyAdapter(this, allFoodNameList, allFoodImageList, allFoodPriceList,allFoodQuantityList)
 
     }
 }

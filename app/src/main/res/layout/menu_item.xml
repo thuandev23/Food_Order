@@ -26,6 +26,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
+                app:circularflow_radiusInDP="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,15 +48,14 @@
                 android:id="@+id/foodPricePopularMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="160dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/lato"
-                android:text="5$"
+                android:text="5123124124$"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgFoodPopularMenu"
+                app:layout_constraintEnd_toStartOf="@+id/textView21"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -78,13 +78,14 @@
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/lato"
                 android:text="VNĐ"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/lato"
                 app:layout_constraintBottom_toBottomOf="@+id/foodPricePopularMenu"
-                app:layout_constraintStart_toEndOf="@+id/foodPricePopularMenu"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/foodPricePopularMenu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

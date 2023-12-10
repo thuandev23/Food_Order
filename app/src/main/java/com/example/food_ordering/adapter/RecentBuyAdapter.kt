@@ -8,28 +8,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.food_ordering.databinding.RecentBuyItemsBinding
 
-class RecentBuyAdapter (
+class RecentBuyAdapter(
     private var context: Context,
     private var foodNameList: ArrayList<String>,
     private var foodImageList: ArrayList<String>,
     private var foodPriceList: ArrayList<String>,
-//    private var foodQuantityList: ArrayList<Int>,
-) : RecyclerView.Adapter<RecentBuyAdapter.RecentBuyViewHolder>(){
-    inner class RecentBuyViewHolder(private val binding: RecentBuyItemsBinding):RecyclerView.ViewHolder(binding.root) {
+    private var foodQuantityList: ArrayList<Int>,
+) : RecyclerView.Adapter<RecentBuyAdapter.RecentBuyViewHolder>() {
+    inner class RecentBuyViewHolder(private val binding: RecentBuyItemsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-                binding.apply {
-                    foodNameRecentBuy.text = foodNameList[position]
-                    foodPriceRecentBuy.text = foodPriceList[position]
-//                    foodQuantityRecentBuy.text = foodQuantityList[position].toString()
-                    val uri = Uri.parse(foodImageList[position])
-                    Glide.with(context).load(uri).into(imgFoodRecentBuy)
-                }
+            binding.apply {
+                foodNameRecentBuy.text = foodNameList[position]
+                foodPriceRecentBuy.text = foodPriceList[position]
+                foodQuantityRecentBuy.text = foodQuantityList[position].toString()
+                val uri = Uri.parse(foodImageList[position])
+                Glide.with(context).load(uri).into(imgFoodRecentBuy)
+            }
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentBuyViewHolder {
-        val binding = RecentBuyItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RecentBuyItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecentBuyViewHolder(binding)
     }
 

@@ -1,6 +1,7 @@
 package com.example.food_ordering.fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -43,13 +44,23 @@ class HistoryFragment : Fragment() {
         // initialize Firebase (auth, database)
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-        // Retrieve and display the user order history
-        retrieveBuyHistory()
 
         binding.recentBuyItem.setOnClickListener {
             seeItemsRecentBuy()
         }
+        // Retrieve and display the user order history
+        retrieveBuyHistory()
+        binding.btnReceived.setOnClickListener {
+            updateOrderDetailsToPayStatus()
+        }
         return binding.root
+    }
+
+    private fun updateOrderDetailsToPayStatus() {
+        val itemPushKey = listOfOrderItem[0].itemPushKey
+        val completeOrderReference = database.reference.child("CompletedOrder").child(itemPushKey!!)
+        completeOrderReference.child("paymentReceived").setValue(true)
+
     }
 
     private fun seeItemsRecentBuy() {
@@ -79,14 +90,11 @@ class HistoryFragment : Fragment() {
                     setPreviousBuyItemsRecyclerView()
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
-
-
     }
 
     private fun setDataInRecentBuyItem() {
@@ -100,9 +108,10 @@ class HistoryFragment : Fragment() {
                 val uri = Uri.parse(image)
                 Glide.with(requireContext()).load(uri).into(buyAgainFoodImage)
 
-                listOfOrderItem.reverse()
-                if(listOfOrderItem.isNotEmpty()){
-
+                val isOrdersAccepted = listOfOrderItem[0].orderAccepted
+                if (isOrdersAccepted){
+                    orderStatus.background.setTint(Color.GREEN)
+                    btnReceived.visibility = View.VISIBLE
                 }
             }
         }
@@ -121,6 +130,7 @@ class HistoryFragment : Fragment() {
                         buyAgainFoodImage.add(it)
                     }
                 }
+
                 val rv = binding.buyAgainRecyclerView
                 rv.layoutManager = LinearLayoutManager(requireContext())
                 buyAgainAdapter = BuyAgainAdapter(
