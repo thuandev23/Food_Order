@@ -13,7 +13,6 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.food_ordering.R
 import com.example.food_ordering.adapter.MenuAdapter
-import com.example.food_ordering.adapter.PopularAdapter
 import com.example.food_ordering.databinding.FragmentHomeBinding
 import com.example.food_ordering.model.AllItemMenu
 import com.google.firebase.database.DataSnapshot
@@ -37,16 +36,16 @@ class HomeFragment : Fragment() {
             val bottomSheetDialog = MenuBottomSheefFragment()
             bottomSheetDialog.show(parentFragmentManager, "Test")
         }
-        retrive()
+        retrieve()
         return binding.root
     }
 
-    private fun retrive() {
+    private fun retrieve() {
         database = FirebaseDatabase.getInstance()
         val foodRef: DatabaseReference = database.reference.child("menu")
         menuItems = mutableListOf()
         //fetch data in firebase database
-        foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        foodRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (foodSnapshot in snapshot.children) {
                     val menuItem = foodSnapshot.getValue(AllItemMenu::class.java)

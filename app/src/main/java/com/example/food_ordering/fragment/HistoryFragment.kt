@@ -76,7 +76,7 @@ class HistoryFragment : Fragment() {
         userId = auth.currentUser?.uid?:""
         val buyItemReference:DatabaseReference = database.reference.child("user").child(userId).child("BuyHistory")
         val shortingQuery = buyItemReference.orderByChild("currentTime")
-        shortingQuery.addListenerForSingleValueEvent(object :ValueEventListener{
+        shortingQuery.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (buySnapshot in snapshot.children){
                     val buyHistory = buySnapshot.getValue(OrderDetails::class.java)

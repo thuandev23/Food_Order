@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -68,8 +69,20 @@ class SignActivity : AppCompatActivity() {
             val signIntent = googleSignInClient.signInIntent
             launcher.launch(signIntent)
         }
+        var isPasswordVisible = false
+        binding.showPassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            togglePasswordVisibility(isPasswordVisible)
+        }
     }
-
+    private fun togglePasswordVisibility(passwordVisible: Boolean) {
+        if (passwordVisible){
+            binding.password.transformationMethod = null
+        }
+        else{
+            binding.password.transformationMethod = PasswordTransformationMethod.getInstance()
+        }
+    }
     private fun createNewAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {

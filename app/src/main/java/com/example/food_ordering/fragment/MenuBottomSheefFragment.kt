@@ -43,7 +43,7 @@ class MenuBottomSheefFragment : BottomSheetDialogFragment() {
         val foodRef: DatabaseReference = database.reference.child("menu")
         menuItems = mutableListOf()
         //fetch data in firebase database
-        foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        foodRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (foodSnapshot in snapshot.children) {
                     val menuItem = foodSnapshot.getValue(AllItemMenu::class.java)

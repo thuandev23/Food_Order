@@ -94,7 +94,6 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edittextshape"
         android:drawableLeft="@drawable/lock"
-        android:drawableRight="@drawable/eye"
         android:drawablePadding="15dp"
         android:ems="10"
         android:fontFamily="@font/lato"
@@ -103,6 +102,16 @@
         app:layout_constraintEnd_toEndOf="@+id/email"
         app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <ImageView
+        android:id="@+id/showPassword"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/eye"
+        app:layout_constraintBottom_toBottomOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="@+id/password"
+        app:layout_constraintTop_toTopOf="@+id/password" />
 
     <TextView
         android:id="@+id/textView9"
