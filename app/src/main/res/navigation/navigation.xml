@@ -15,11 +15,7 @@
         android:name="com.example.food_ordering.fragment.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.food_ordering.fragment.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.food_ordering.fragment.HomeFragment"
@@ -30,4 +26,31 @@
         android:name="com.example.food_ordering.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/aboutUserFragment"
+        android:name="com.example.food_ordering.fragment.AboutUserFragment"
+        android:label="fragment_about_user"
+        tools:layout="@layout/fragment_about_user" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.food_ordering.fragment.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <action
+        android:id="@+id/action_homeFragment_to_aboutUserFragment"
+        app:destination="@id/aboutUserFragment"
+        app:popUpTo="@id/homeFragment"
+        app:popUpToInclusive="true" />
+    <activity
+        android:id="@+id/policesActivity"
+        android:name="com.example.food_ordering.PolicesActivity"
+        android:label="activity_polices"
+        tools:layout="@layout/activity_polices" />
+    <activity
+        android:id="@+id/myVoucherActivity"
+        android:name="com.example.food_ordering.MyVoucherActivity"
+        android:label="activity_my_voucher"
+        tools:layout="@layout/activity_my_voucher" />
+
+
 </navigation>

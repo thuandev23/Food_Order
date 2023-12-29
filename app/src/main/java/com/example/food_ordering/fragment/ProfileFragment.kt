@@ -49,6 +49,9 @@ class ProfileFragment : Fragment() {
 
             updateUserData(name, address, email, phone)
         }
+        binding.btnClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
         return binding.root
     }
 
@@ -81,8 +84,6 @@ class ProfileFragment : Fragment() {
                                 "Profile update successfully !",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            val navController = findNavController()
-                            navController.popBackStack(R.id.homeFragment, false)
                         }.addOnFailureListener {
                             Toast.makeText(
                                 requireContext(),
@@ -126,12 +127,15 @@ class ProfileFragment : Fragment() {
     }
     private fun loadImageFromFirebaseStorage(imagePath: String) {
         val storageRef = FirebaseStorage.getInstance().getReference(imagePath)
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            Glide.with(this@ProfileFragment).load(uri).into(binding.profileImage)
-        }.addOnFailureListener { exception ->
-            Log.e("ProfileFragment", "Failed to download image: ${exception.message}")
+        if (isAdded) {
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this).load(uri).into(binding.profileImage)
+            }.addOnFailureListener { exception ->
+                Log.e("ProfileFragment", "Failed to download image: ${exception.message}")
+            }
         }
     }
+
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
             binding.profileImage.setImageURI(uri)

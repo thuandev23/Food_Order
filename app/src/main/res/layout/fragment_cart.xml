@@ -12,7 +12,7 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cart"
+        android:text="All Menu"
         android:fontFamily="@font/yeon_sung"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

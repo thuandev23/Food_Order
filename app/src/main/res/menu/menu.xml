@@ -17,7 +17,7 @@
         android:title="History"
         android:icon="@drawable/history"/>
     <item
-        android:id="@+id/profileFragment"
-        android:title="Profile"
+        android:id="@+id/aboutUserFragment"
+        android:title="About"
         android:icon="@drawable/user"/>
 </menu>

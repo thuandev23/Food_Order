@@ -13,8 +13,10 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.food_ordering.R
 import com.example.food_ordering.adapter.MenuAdapter
+import com.example.food_ordering.adapter.VoucherAdapter
 import com.example.food_ordering.databinding.FragmentHomeBinding
 import com.example.food_ordering.model.AllItemMenu
+import com.example.food_ordering.model.AllVoucher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -25,6 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding : FragmentHomeBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var menuItems: MutableList<AllItemMenu>
+    private lateinit var voucherItems: MutableList<AllVoucher>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,11 +39,33 @@ class HomeFragment : Fragment() {
             val bottomSheetDialog = MenuBottomSheefFragment()
             bottomSheetDialog.show(parentFragmentManager, "Test")
         }
-        retrieve()
+
+        retrieveMenu()
+        retrieveVoucher()
         return binding.root
     }
 
-    private fun retrieve() {
+    private fun retrieveVoucher() {
+        database = FirebaseDatabase.getInstance()
+        val voucherRef:DatabaseReference = database.reference.child("voucher")
+        voucherItems = mutableListOf()
+        voucherRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (voucherSnapshot in snapshot.children) {
+                    val voucherItem = voucherSnapshot.getValue(AllVoucher::class.java)
+                    voucherItem?.let { voucherItems.add(it) }
+                }
+                randomPopularItems()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun retrieveMenu() {
         database = FirebaseDatabase.getInstance()
         val foodRef: DatabaseReference = database.reference.child("menu")
         menuItems = mutableListOf()
@@ -51,21 +76,26 @@ class HomeFragment : Fragment() {
                     val menuItem = foodSnapshot.getValue(AllItemMenu::class.java)
                     menuItem?.let { menuItems.add(it) }
                 }
-                randomPopularItems()
+                setVoucherAdapter()
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.d("DatabaseError", "Error: ${error.message}")
             }
         })
     }
 
+    private fun setVoucherAdapter() {
+        val adapter = VoucherAdapter(voucherItems, requireContext())
+        binding.voucherRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.voucherRecyclerView.adapter = adapter
+    }
+
     private fun randomPopularItems() {
         val index = menuItems.indices.toList().shuffled()
         val numItemToShow = 6
-        val subsetmenuItems = index.take(numItemToShow).map { menuItems[it] }
+        val subSetMenuItems = index.take(numItemToShow).map { menuItems[it] }
 
-        setPopulerAdapter(subsetmenuItems)
+        setPopulerAdapter(subSetMenuItems)
     }
 
     private fun setPopulerAdapter(subsetmenuItems: List<AllItemMenu>) {

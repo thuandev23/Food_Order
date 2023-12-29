@@ -16,8 +16,7 @@ class DialogUpdateUserFragment : DialogFragment() {
             .setMessage("Vui lòng cập nhật thông tin trước khi mua hàng.")
             .setPositiveButton("Cập nhật") { dialog, _ ->
                 dialog.dismiss()
-                val navController = findNavController()
-                navController.navigate(R.id.profileFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_aboutUserFragment)
             }
             .setNegativeButton("Để sau") { dialog, _ ->
                 dialog.dismiss()
