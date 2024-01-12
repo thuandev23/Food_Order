@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SplashScreen">
 
     <ImageView
@@ -37,6 +38,7 @@
         android:fontFamily="@font/lato"
         android:text="Deliever Favorite Food"
         android:textStyle="bold"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.food_ordering.fragment.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.food_ordering.fragment.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.food_ordering.fragment.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.food_ordering.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/aboutUserFragment"
+        android:name="com.example.food_ordering.fragment.AboutUserFragment"
+        android:label="fragment_about_user"
+        tools:layout="@layout/fragment_about_user" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.food_ordering.fragment.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <action
+        android:id="@+id/action_homeFragment_to_aboutUserFragment"
+        app:destination="@id/aboutUserFragment"
+        app:popUpTo="@id/homeFragment"
+        app:popUpToInclusive="true" />
+    <activity
+        android:id="@+id/policesActivity"
+        android:name="com.example.food_ordering.PolicesActivity"
+        android:label="activity_polices"
+        tools:layout="@layout/activity_polices" />
+    <activity
+        android:id="@+id/myVoucherActivity"
+        android:name="com.example.food_ordering.MyVoucherActivity"
+        android:label="activity_my_voucher"
+        tools:layout="@layout/activity_my_voucher" />
+
+
+</navigation>

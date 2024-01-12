@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PayOutActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnBackPayout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/yeon_sung"
+        android:text="Details Payout"
+        android:textColor="@color/textColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBackPayout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView23">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/yeon_sung"
+                    android:text="Name"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/lato"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/yeon_sung"
+                    android:text="Address"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/lato"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/yeon_sung"
+                    android:text="Phone"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/lato"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_italic"
+                    android:text="Payment Method"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/cashondelivery" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_italic"
+                    android:text="Total"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/totalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/lato"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_italic"
+                    android:text="Code Voucher"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/codeVoucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:hint="add code"
+                    android:fontFamily="@font/lato"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnApplyVoucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittextshape"
+                    android:text="Apply"
+                    android:textColor="@color/textColor"
+                    android:textAllCaps="false"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_italic"
+                    android:text="Total Amount"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/totalAmountVoucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/lato"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPlaceMyOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/proceedbutonshape"
+                android:fontFamily="@font/yeon_sung"
+                android:text="Place My Order"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/totalAmountVoucher" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
