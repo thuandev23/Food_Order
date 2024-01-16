@@ -14,6 +14,17 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.paypal.checkout.approve.OnApprove
+import com.paypal.checkout.cancel.OnCancel
+import com.paypal.checkout.createorder.CreateOrder
+import com.paypal.checkout.createorder.CurrencyCode
+import com.paypal.checkout.createorder.OrderIntent
+import com.paypal.checkout.createorder.UserAction
+import com.paypal.checkout.error.OnError
+import com.paypal.checkout.order.Amount
+import com.paypal.checkout.order.AppContext
+import com.paypal.checkout.order.OrderRequest
+import com.paypal.checkout.order.PurchaseUnit
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -64,7 +75,7 @@ class PayOutActivity : AppCompatActivity() {
         totalAmountVoucher = calculateTotalAmount().toString() + "$"
         binding.totalAmountVoucher.isEnabled = false
         binding.totalAmountVoucher.setText(totalAmountVoucher)
-
+        var x = totalAmountVoucher
         binding.btnApplyVoucher.setOnClickListener {
             codeVoucher = binding.codeVoucher.text.toString().trim()
             checkCodeVoucher(codeVoucher) { result ->
@@ -87,6 +98,37 @@ class PayOutActivity : AppCompatActivity() {
         binding.btnBackPayout.setOnClickListener {
             finish()
         }
+
+        binding.paymentButtonContainer.setup(
+            createOrder =
+            CreateOrder { createOrderActions ->
+                val order =
+                    OrderRequest(
+                        intent = OrderIntent.CAPTURE,
+                        appContext = AppContext(userAction = UserAction.PAY_NOW),
+                        purchaseUnitList =
+                        listOf(
+                            PurchaseUnit(
+                                amount =
+                                Amount(currencyCode = CurrencyCode.USD, value = x)
+                            )
+                        )
+                    )
+                createOrderActions.create(order)
+            },
+            onApprove =
+            OnApprove { approval ->
+                approval.orderActions.capture { captureOrderResult ->
+                    Log.i("CaptureOrder", "CaptureOrderResult: $captureOrderResult")
+                }
+            },
+            onCancel = OnCancel {
+                Log.d("OnCancel", "Buyer canceled the PayPal experience.")
+            },
+            onError = OnError { errorInfo ->
+                Log.d("OnError", "Error: $errorInfo")
+            }
+        )
     }
 
     private fun checkCodeVoucher(codeVoucher: String, callback: (Int) -> Unit) {

@@ -7,4 +7,8 @@
     <color name="endColor">#4B4BB8</color>
     <color name="iconColor">#FF9800</color>
 
+
+    <color name="color_primary">#3F51B5</color>
+    <color name="color_primary_dark">#9A87E0</color>
+    <color name="color_accent">#FF4081</color>
 </resources>
