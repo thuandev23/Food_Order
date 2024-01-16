@@ -40,6 +40,15 @@
         app:layout_constraintTop_toTopOf="@+id/textView15"
         app:srcCompat="@drawable/bell" />
 
+    <ImageView
+        android:id="@+id/spin"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/notification"
+        app:layout_constraintEnd_toStartOf="@+id/notification"
+        app:layout_constraintTop_toTopOf="@+id/notification"
+        app:srcCompat="@drawable/spinning_wheel" />
     <fragment
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -53,4 +62,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
         app:navGraph="@navigation/navigation" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

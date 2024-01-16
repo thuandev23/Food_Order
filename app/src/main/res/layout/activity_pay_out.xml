@@ -296,6 +296,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/totalAmountVoucher" />
+            <com.paypal.checkout.paymentbutton.PaymentButtonContainer
+                android:id="@+id/payment_button_container"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                app:paypal_button_color="silver"
+                app:paypal_button_enabled="true"
+                app:paypal_button_label="pay"
+                app:paypal_button_shape="rectangle"
+                app:paypal_button_size="large" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

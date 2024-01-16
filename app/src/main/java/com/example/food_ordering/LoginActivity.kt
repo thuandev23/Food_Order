@@ -97,14 +97,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onStart() {
+    override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser!=null){
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-    }*/
+    }
     // Launcher for google signIn
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
