@@ -43,12 +43,12 @@
         app:popUpToInclusive="true" />
     <activity
         android:id="@+id/policesActivity"
-        android:name="com.example.food_ordering.PolicesActivity"
+        android:name="com.example.food_ordering.activity.PolicesActivity"
         android:label="activity_polices"
         tools:layout="@layout/activity_polices" />
     <activity
         android:id="@+id/myVoucherActivity"
-        android:name="com.example.food_ordering.MyVoucherActivity"
+        android:name="com.example.food_ordering.activity.MyVoucherActivity"
         android:label="activity_my_voucher"
         tools:layout="@layout/activity_my_voucher" />
 

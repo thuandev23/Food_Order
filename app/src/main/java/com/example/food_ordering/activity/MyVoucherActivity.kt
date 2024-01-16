@@ -1,4 +1,4 @@
-package com.example.food_ordering
+package com.example.food_ordering.activity
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +51,7 @@ class MyVoucherActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid ?: ""
         val voucherRef: DatabaseReference =
-            database.reference.child("user").child(userId).child("MyVouchers")
+            database.reference.child("accounts").child("users").child(userId).child("MyVouchers")
 
         voucherRef.addValueEventListener(object : ValueEventListener {
             @SuppressLint("SetTextI18n")

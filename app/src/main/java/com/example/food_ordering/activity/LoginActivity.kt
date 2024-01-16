@@ -1,4 +1,4 @@
-package com.example.food_ordering
+package com.example.food_ordering.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivityLoginBinding
-import com.example.food_ordering.databinding.ActivityStartScreenBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -45,13 +45,13 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
 
         binding.btnLogin.setOnClickListener{
-            // get text form edittext
             email = binding.email.text.toString().trim()
             password = binding.password.text.toString().trim()
-
-            if (email.isBlank() || password.isBlank()) {
-                Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
-            } else {
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Please fill email !", Toast.LENGTH_SHORT).show()
+            } else if (email.isEmpty()) {
+                Toast.makeText(this, "Please fill password !", Toast.LENGTH_SHORT).show()
+            } else  {
                 loginUser(email, password)
             }
         }
@@ -61,8 +61,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.txtDontHaveAcc.setOnClickListener{
-            val intent = Intent(this, SignActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, SignActivity::class.java))
         }
 
         var isPasswordVisible = false
@@ -83,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val user = auth.currentUser
-                Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
@@ -92,7 +91,6 @@ class LoginActivity : AppCompatActivity() {
                     "Authentication failed: ${task.exception?.message}",
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.d("Account", "createUserAccount", task.exception)
             }
         }
     }

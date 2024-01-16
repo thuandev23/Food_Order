@@ -13,6 +13,7 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.food_ordering.R
 import com.example.food_ordering.adapter.MenuAdapter
+import com.example.food_ordering.adapter.PopularAdapter
 import com.example.food_ordering.adapter.VoucherAdapter
 import com.example.food_ordering.databinding.FragmentHomeBinding
 import com.example.food_ordering.model.AllItemMenu
@@ -51,11 +52,12 @@ class HomeFragment : Fragment() {
         voucherItems = mutableListOf()
         voucherRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                voucherItems.clear()
                 for (voucherSnapshot in snapshot.children) {
                     val voucherItem = voucherSnapshot.getValue(AllVoucher::class.java)
                     voucherItem?.let { voucherItems.add(it) }
                 }
-                randomPopularItems()
+                setVoucherAdapter()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -72,11 +74,12 @@ class HomeFragment : Fragment() {
         //fetch data in firebase database
         foodRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                menuItems.clear()
                 for (foodSnapshot in snapshot.children) {
                     val menuItem = foodSnapshot.getValue(AllItemMenu::class.java)
                     menuItem?.let { menuItems.add(it) }
                 }
-                setVoucherAdapter()
+                randomPopularItems()
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("DatabaseError", "Error: ${error.message}")
@@ -99,14 +102,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPopulerAdapter(subsetmenuItems: List<AllItemMenu>) {
-        val adapter = MenuAdapter(subsetmenuItems, requireContext())
+        val adapter = PopularAdapter(subsetmenuItems, requireContext())
         binding.PopularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.PopularRecyclerView.adapter = adapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val imageList = ArrayList<SlideModel>()
         imageList.add(SlideModel(R.drawable.banner1, ScaleTypes.FIT))
@@ -128,7 +130,5 @@ class HomeFragment : Fragment() {
             }
         })
     }
-    companion object {
 
-    }
 }

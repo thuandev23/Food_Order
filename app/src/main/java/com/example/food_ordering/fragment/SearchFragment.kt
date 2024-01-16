@@ -41,8 +41,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun retrieveMenuItems() {
+        binding.progressBar.visibility = View.VISIBLE
         database = FirebaseDatabase.getInstance()
-
         val foodReference: DatabaseReference = database.reference.child("menu")
         foodReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -68,6 +68,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setAdapter(filteredMenuItems: List<AllItemMenu>) {
+        binding.progressBar.visibility = View.GONE
         adapter = MenuAdapter(filteredMenuItems, requireContext())
         binding.menuSearchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.menuSearchRecyclerView.adapter = adapter

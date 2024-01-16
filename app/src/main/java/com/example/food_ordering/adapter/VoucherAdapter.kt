@@ -32,7 +32,6 @@ class VoucherAdapter(
     }
 
     inner class VoucherViewHolder(private val binding: VouchersItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             val voucherItem = voucherItems[position]
             val database = FirebaseDatabase.getInstance().reference
@@ -42,8 +41,8 @@ class VoucherAdapter(
             binding.apply {
                 code.text = voucherItem.code
                 discountPercent.text = "${voucherItem.discountPercent}% OFF"
-                minDiscountAmount.text = "Min. spend: ${voucherItem.minPurchaseAmount}VNĐ"
-                maxDiscount.text = "Maximum\n ${voucherItem.maxDiscount}VNĐ"
+                minDiscountAmount.text = "Min. spend: ${voucherItem.minPurchaseAmount}VND"
+                maxDiscount.text = "Maximum:\n ${voucherItem.maxDiscount}VND"
                 exprityDate.text = "Ends on ${ voucherItem.expiryDate }"
                 collectVoucher.setOnClickListener {
 
@@ -57,8 +56,9 @@ class VoucherAdapter(
                         voucherItem.minPurchaseAmount,
                         voucherItem.maxDiscount,
                     )
-                    database.child("user").child(userId).child("MyVouchers").push().setValue(voucherItemNew)
+                    database.child("accounts").child("users").child(userId).child("MyVouchers").push().setValue(voucherItemNew)
                         .addOnSuccessListener {
+                            // kiểm tra xem đã thêm vào voucher chưa và hiển thị cho người dùng biết là đã thêm thành công
                             Toast.makeText(requireContext, "Item added into my voucher successfully", Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener {
                             Toast.makeText(requireContext, "Item added into my voucher failed", Toast.LENGTH_SHORT).show()

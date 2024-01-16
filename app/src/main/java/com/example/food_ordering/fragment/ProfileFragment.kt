@@ -42,12 +42,7 @@ class ProfileFragment : Fragment() {
         }
         setUserData()
         binding.btnSaveInformation.setOnClickListener {
-            val name = binding.name.text.toString()
-            val address = binding.address.text.toString()
-            val email = binding.email.text.toString()
-            val phone = binding.phone.text.toString()
-
-            updateUserData(name, address, email, phone)
+            updateUserData()
         }
         binding.btnClose.setOnClickListener {
             findNavController().navigateUp()
@@ -55,54 +50,52 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-    private fun updateUserData(name: String, address: String, email: String, phone: String) {
+    private fun updateUserData() {
         val userId = auth.currentUser?.uid
 
         if (userId != null && imageUser != null) {
             val storageRef = FirebaseStorage.getInstance().reference
             val imageRef = storageRef.child("user_images/$userId.jpg")
-
             val uploadTask = imageRef.putFile(imageUser!!)
 
             uploadTask.addOnSuccessListener {
-                imageRef.downloadUrl.addOnCompleteListener { downloadTask ->
-                    if (downloadTask.isSuccessful) {
-                        val imageUrl = downloadTask.result.toString()
+                imageRef.downloadUrl.addOnSuccessListener { uri ->
+                    val imageUrl = uri.toString()
 
-                        val userReference = database.getReference("user").child(userId)
-                        val userData = hashMapOf(
-                            "name" to binding.name.text.toString(),
-                            "address" to binding.address.text.toString(),
-                            "email" to binding.email.text.toString(),
-                            "phone" to binding.phone.text.toString(),
-                            "image" to imageUrl
-                        )
+                    val name = binding.name.text.toString()
+                    val address = binding.address.text.toString()
+                    val email = binding.email.text.toString()
+                    val phone = binding.phone.text.toString()
 
-                        userReference.setValue(userData).addOnSuccessListener {
-                            Toast.makeText(
-                                requireContext(),
-                                "Profile update successfully !",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }.addOnFailureListener {
-                            Toast.makeText(
-                                requireContext(),
-                                "Profile update failed !",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    val userReference = database.getReference("accounts").child("users").child(userId)
+                    val userData = hashMapOf(
+                        "name" to name,
+                        "address" to address,
+                        "email" to email,
+                        "phone" to phone,
+                        "image" to imageUrl
+                    )
+                    userReference.setValue(userData).addOnSuccessListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Profile update successfully !",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }.addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Profile update failed !",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
-        } else {
-            Log.e("ProfileFragment", "Error: userId or imageUser is null")
         }
     }
-
     private fun setUserData() {
         val userId = auth.currentUser?.uid
         if (userId != null) {
-            val userReference = database.getReference("user").child(userId)
+            val userReference = database.getReference("accounts").child("users").child(userId)
 
             userReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {

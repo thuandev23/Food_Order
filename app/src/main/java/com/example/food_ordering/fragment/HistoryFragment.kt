@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.food_ordering.RecentOrderItemsActivity
+import com.example.food_ordering.activity.RecentOrderItemsActivity
 import com.example.food_ordering.adapter.BuyAgainAdapter
 import com.example.food_ordering.databinding.FragmentHistoryBinding
 import com.example.food_ordering.model.OrderDetails
@@ -49,7 +49,18 @@ class HistoryFragment : Fragment() {
             seeItemsRecentBuy()
         }
         // Retrieve and display the user order history
-        retrieveBuyHistory()
+        if(listOfOrderItem.isEmpty()){
+            binding.buyAgainRecyclerView.visibility = View.GONE
+            binding.recentBuyItem.visibility = View.GONE
+            binding.noProductsImage.visibility = View.VISIBLE
+        }
+        else{
+            binding.buyAgainRecyclerView.visibility = View.VISIBLE
+            binding.noProductsImage.visibility = View.GONE
+            binding.recentBuyItem.visibility = View.VISIBLE
+            retrieveBuyHistory()
+        }
+
         binding.btnReceived.setOnClickListener {
             updateOrderDetailsToPayStatus()
         }
@@ -74,7 +85,7 @@ class HistoryFragment : Fragment() {
     private fun retrieveBuyHistory() {
         binding.recentBuyItem.visibility = View.INVISIBLE
         userId = auth.currentUser?.uid?:""
-        val buyItemReference:DatabaseReference = database.reference.child("user").child(userId).child("BuyHistory")
+        val buyItemReference:DatabaseReference = database.reference.child("accounts").child("users").child(userId).child("BuyHistory")
         val shortingQuery = buyItemReference.orderByChild("currentTime")
         shortingQuery.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

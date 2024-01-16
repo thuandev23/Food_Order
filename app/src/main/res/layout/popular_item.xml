@@ -69,8 +69,7 @@
                 android:text="Add to cart"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/foodPricePopular"
-                app:layout_constraintStart_toStartOf="@+id/foodPricePopular"
+                app:layout_constraintEnd_toEndOf="@+id/textView21"
                 app:layout_constraintTop_toBottomOf="@+id/foodPricePopular" />
 
             <TextView
@@ -79,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/lato"
-                android:text="VNĐ"
+                android:text="VND"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold"

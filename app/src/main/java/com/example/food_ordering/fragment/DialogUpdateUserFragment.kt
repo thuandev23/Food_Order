@@ -12,14 +12,15 @@ import com.example.food_ordering.R
 class DialogUpdateUserFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
-            .setTitle("Cập nhật thông tin")
-            .setMessage("Vui lòng cập nhật thông tin trước khi mua hàng.")
-            .setPositiveButton("Cập nhật") { dialog, _ ->
+            .setTitle("Update information")
+            .setMessage("Please update your information to continue using buying food")
+            .setPositiveButton("Update") { dialog, _ ->
                 dialog.dismiss()
                 findNavController().navigate(R.id.action_homeFragment_to_aboutUserFragment)
             }
-            .setNegativeButton("Để sau") { dialog, _ ->
+            .setNegativeButton("Later") { dialog, _ ->
                 dialog.dismiss()
+                findNavController().navigate(R.id.action_homeFragment_to_aboutUserFragment)
             }
             .create()
     }

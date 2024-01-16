@@ -2,12 +2,10 @@ package com.example.food_ordering.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.food_ordering.MainActivity
-import com.example.food_ordering.R
+import com.example.food_ordering.activity.MainActivity
 import com.example.food_ordering.databinding.FragmentCongratsBottomBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

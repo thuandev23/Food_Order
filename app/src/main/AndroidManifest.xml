@@ -17,37 +17,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SpinMiniGameActivity"
+            android:name=".fragment.VoucherSelectionDialog"
             android:exported="false" />
         <activity
-            android:name=".MyVoucherActivity"
+            android:name=".activity.SpinMiniGameActivity"
             android:exported="false" />
         <activity
-            android:name=".PolicesActivity"
+            android:name=".activity.MyVoucherActivity"
             android:exported="false" />
         <activity
-            android:name=".RecentOrderItemsActivity"
+            android:name=".activity.PolicesActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailsActivity"
+            android:name=".activity.RecentOrderItemsActivity"
             android:exported="false" />
         <activity
-            android:name=".PayOutActivity"
+            android:name=".activity.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseLocationActivity"
+            android:name=".activity.PayOutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ChooseLocationActivity"
             android:exported="true" />
         <activity
-            android:name=".SignActivity"
+            android:name=".activity.SignActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".StartScreen"
+            android:name=".activity.StartScreen"
             android:exported="true" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
 

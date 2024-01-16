@@ -2,14 +2,13 @@ package com.example.food_ordering.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.food_ordering.PayOutActivity
+import com.example.food_ordering.activity.PayOutActivity
 import com.example.food_ordering.adapter.CartAdapter
 import com.example.food_ordering.databinding.FragmentCartBinding
 import com.example.food_ordering.model.CartItem
@@ -19,7 +18,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
 
 class CartFragment : Fragment() {
     private lateinit var binding : FragmentCartBinding
@@ -33,6 +31,7 @@ class CartFragment : Fragment() {
     private lateinit var quantity: MutableList<Int>
     private lateinit var cartAdapter:CartAdapter
     private lateinit var userId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,11 +52,11 @@ class CartFragment : Fragment() {
             //get order items details before processing to check out
             getOrderCartItems()
         }
+
         return binding.root
     }
-
     private fun getOrderCartItems() {
-        val orderIdReference:DatabaseReference = database.reference.child("user").child(userId).child("CartItems")
+        val orderIdReference:DatabaseReference = database.reference.child("accounts").child("users").child(userId).child("CartItems")
         val foodName = mutableListOf<String>()
         val foodPrice = mutableListOf<String>()
         val foodImage = mutableListOf<String>()
@@ -110,7 +109,7 @@ class CartFragment : Fragment() {
     private fun retrieveCartItems() {
         database = FirebaseDatabase.getInstance()
         userId = auth.currentUser?.uid?:""
-        val foodReference: DatabaseReference = database.reference.child("user").child(userId).child("CartItems")
+        val foodReference: DatabaseReference = database.reference.child("accounts").child("users").child(userId).child("CartItems")
         cartItemsName = mutableListOf()
         cartItemPrices = mutableListOf()
         cartImages = mutableListOf()
@@ -134,27 +133,27 @@ class CartFragment : Fragment() {
                 }
                     setAdapter()
             }
-            // Trong hàm setAdapter() của CartFragment
-            private fun setAdapter() {
-                if (cartItemsName.isEmpty()) {
-                    binding.cartRecyclerView.visibility = View.GONE
-                    binding.btnProcessCart.visibility = View.GONE
-                    binding.emptyLayout.visibility = View.VISIBLE
-                } else {
-                    binding.cartRecyclerView.visibility = View.VISIBLE
-                    binding.btnProcessCart.visibility = View.VISIBLE
-                    binding.emptyLayout.visibility = View.GONE
-
-                    cartAdapter = CartAdapter(requireContext(), cartItemsName, cartItemPrices, cartImages, cartDescription, cartIngredient, quantity)
-                    binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    binding.cartRecyclerView.adapter = cartAdapter
-                }
-            }
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(requireContext(), "Data not fetch", Toast.LENGTH_SHORT).show()
             }
 
         })
+    }
+    private fun setAdapter() {
+        if (cartItemsName.isEmpty()) {
+            binding.cartRecyclerView.visibility = View.GONE
+            binding.btnProcessCart.visibility = View.GONE
+            binding.emptyLayout.visibility = View.VISIBLE
+        } else {
+            binding.cartRecyclerView.visibility = View.VISIBLE
+            binding.btnProcessCart.visibility = View.VISIBLE
+            binding.emptyLayout.visibility = View.GONE
+
+            cartAdapter = CartAdapter(requireContext(), cartItemsName, cartItemPrices, cartImages, cartDescription, cartIngredient, quantity)
+            binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.cartRecyclerView.adapter = cartAdapter
+
+            cartAdapter.setItemTouchHelper(binding.cartRecyclerView)
+        }
     }
 }

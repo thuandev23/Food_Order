@@ -1,4 +1,4 @@
-package com.example.food_ordering
+package com.example.food_ordering.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivitySignBinding
-import com.example.food_ordering.databinding.ActivityStartScreenBinding
 import com.example.food_ordering.model.UserModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 
 
@@ -28,6 +29,9 @@ class SignActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var password: String
     private lateinit var username: String
+    private lateinit var phone: String
+    private lateinit var address: String
+    private lateinit var image: String
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -54,8 +58,12 @@ class SignActivity : AppCompatActivity() {
             email = binding.email.text.toString().trim()
             password = binding.password.text.toString().trim()
 
-            if (username.isBlank() || email.isBlank() || password.isBlank()) {
-                Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
+            if (username.isBlank() ) {
+                Toast.makeText(this, "Please fill username", Toast.LENGTH_SHORT).show()
+            } else if (email.isBlank() ) {
+                Toast.makeText(this, "Please fill email", Toast.LENGTH_SHORT).show()
+            } else if (password.isBlank()) {
+                Toast.makeText(this, "Please fill password", Toast.LENGTH_SHORT).show()
             } else {
                 createNewAccount(email, password)
             }
@@ -64,7 +72,6 @@ class SignActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-
         binding.btnGoogle.setOnClickListener {
             val signIntent = googleSignInClient.signInIntent
             launcher.launch(signIntent)
@@ -92,8 +99,7 @@ class SignActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "Account created failed", Toast.LENGTH_SHORT).show()
-                Log.d("Account", "createNewAccount: Failed", task.exception)
+                Toast.makeText(this, "Account created failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -103,10 +109,12 @@ class SignActivity : AppCompatActivity() {
         username = binding.userName.text.toString()
         email = binding.email.text.toString().trim()
         password = binding.password.text.toString().trim()
-
-        val user = UserModel(username, email, password)
+        phone = ""
+        address = ""
+        image = ""
+        val user = UserModel(username, email, password, phone, address, image)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        database.child("user").child(userId).setValue(user)
+        database.child("accounts").child("users").child(userId).setValue(user)
     }
 
     // Launcher for google signIn

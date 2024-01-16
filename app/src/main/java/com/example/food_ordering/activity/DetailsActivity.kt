@@ -1,4 +1,4 @@
-package com.example.food_ordering
+package com.example.food_ordering.activity
 
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -60,7 +60,7 @@ class DetailsActivity : AppCompatActivity() {
             foodIngredient.toString(),
             1
         )
-        database.child("user").child(userId).child("CartItems").push().setValue(cartItem)
+        database.child("accounts").child("users").child(userId).child("CartItems").push().setValue(cartItem)
             .addOnSuccessListener {
                 Toast.makeText(this, "Item added into cart successfully", Toast.LENGTH_SHORT).show()
                 finish()

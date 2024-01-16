@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecentOrderItemsActivity">
+    tools:context=".activity.RecentOrderItemsActivity">
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackPayout"
         android:layout_width="30dp"

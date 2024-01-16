@@ -1,13 +1,24 @@
 package com.example.food_ordering.adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.food_ordering.R
 import com.example.food_ordering.databinding.CartItemBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -27,18 +38,12 @@ class CartAdapter(
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     // initialize FirebaseAuth
     private val auth = FirebaseAuth.getInstance()
-
+    private val database = FirebaseDatabase.getInstance()
+    private val userUid = auth.currentUser?.uid ?: ""
+    private val cartItemsReference = database.reference.child("accounts").child("users").child(userUid).child("CartItems")
+    private var  itemQuantities = IntArray(cartItems.size) {1}
     init {
-        val database = FirebaseDatabase.getInstance()
-        val userId = auth.currentUser?.uid ?: ""
-        val cartItemsNumber = cartItems.size
-        itemQuantities = IntArray(cartItems.size) { 1 }
-        cartItemsReference = database.reference.child("user").child(userId).child("CartItems")
-    }
-
-    companion object {
-        private var itemQuantities: IntArray = intArrayOf()
-        private lateinit var cartItemsReference: DatabaseReference
+        itemQuantities = cartQuantity.toIntArray()
     }
 
     inner class CartViewHolder(private val binding: CartItemBinding) :
@@ -61,32 +66,38 @@ class CartAdapter(
                     increaseQuantity(position)
                 }
 
-                btnDeleteTrashCart.setOnClickListener {
-                    val itemPosition = adapterPosition
-                    if (itemPosition != RecyclerView.NO_POSITION) {
-                        deleteItem(itemPosition)
-                    }
-                }
-
             }
         }
-
         private fun decreaseQuantity(position: Int) {
             if (itemQuantities[position] > 1) {
                 itemQuantities[position]--
                 cartQuantity[position] = itemQuantities[position]
                 binding.countItemCart.text = itemQuantities[position].toString()
+                updateQuantityInDatabase(position)
             }
         }
+
         private fun increaseQuantity(position: Int) {
             if (itemQuantities[position] < 10) {
                 itemQuantities[position]++
                 cartQuantity[position] = itemQuantities[position]
                 binding.countItemCart.text = itemQuantities[position].toString()
+                updateQuantityInDatabase(position)
             }
         }
+        private fun updateQuantityInDatabase(position: Int) {
+            getUniqueKeyPosition(position) { uniqueKey ->
+                if (uniqueKey != null) {
+                    cartItemsReference.child(uniqueKey).child("foodQuantities").setValue(itemQuantities[position])
+                }
+            }
+        }
+    }
+    fun getUpdateItemsQuantities(): MutableList<Int> {
+        return itemQuantities.toMutableList()
+    }
 
-        private fun deleteItem(position: Int) {
+    private fun deleteItem(position: Int) {
             getUniqueKeyPosition(position) { uniqueKey ->
                 if (uniqueKey != null) {
                     removeItem(position, uniqueKey)
@@ -94,39 +105,31 @@ class CartAdapter(
             }
         }
 
-        private fun removeItem(position: Int, uniqueKey: String) {
-            if (uniqueKey != null) {
-                cartItemsReference.child(uniqueKey).removeValue().addOnSuccessListener {
-                    if (position >= 0 && position < cartItems.size) {
-                        cartItems.removeAt(position)
-                        cartImages.removeAt(position)
-                        cartDescription.removeAt(position)
-                        cartIngredient.removeAt(position)
-                        cartItemPrices.removeAt(position)
-
-                        // Update cartQuantity
-                        if (position < cartQuantity.size) {
-                            cartQuantity.removeAt(position)
-                        }
-
-                        Toast.makeText(context, "Item deleted", Toast.LENGTH_SHORT).show()
-
-                        // Update itemQuantities
-                        itemQuantities =
-                            itemQuantities.filterIndexed { index, _ -> index != position }.toIntArray()
-
-                        notifyItemRemoved(position)
-                        notifyItemRangeChanged(position, cartItems.size)
-
+    private fun removeItem(position: Int, uniqueKey: String) {
+            cartItemsReference.child(uniqueKey).removeValue().addOnSuccessListener {
+                if (position >= 0 && position < cartItems.size) {
+                    cartItems.removeAt(position)
+                    cartImages.removeAt(position)
+                    cartDescription.removeAt(position)
+                    cartIngredient.removeAt(position)
+                    cartItemPrices.removeAt(position)
+                    // Update cartQuantity
+                    if (position < cartQuantity.size) {
+                        cartQuantity.removeAt(position)
                     }
-                }.addOnFailureListener {
-                    Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show()
+                    // Update itemQuantities
+                    itemQuantities =
+                        itemQuantities.filterIndexed { index, _ -> index != position }.toIntArray()
+
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, cartItems.size)
                 }
+            }.addOnFailureListener {
+                Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show()
             }
         }
 
-
-        private fun getUniqueKeyPosition(position: Int, onComplete: (String?) -> Unit) {
+    private fun getUniqueKeyPosition(position: Int, onComplete: (String?) -> Unit) {
             cartItemsReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var uniqueKey: String? = null
@@ -145,9 +148,56 @@ class CartAdapter(
 
             })
         }
+
+    fun setItemTouchHelper(recyclerView: RecyclerView) {
+        val itemTouchHelperCallback = object :
+            ItemTouchHelper.SimpleCallback(0,  ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                AlertDialog.Builder(context)
+                    .setTitle("Delete Confirmation")
+                    .setMessage("Are you sure you want to delete this ${cartItems[position]}?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        deleteItem(position) // Uncomment and implement this method
+                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("No") { _, _ ->
+                        // Revert swipe
+                        notifyItemChanged(viewHolder.adapterPosition)
+                    }
+                    .show()
+            }
+
+            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                val itemView = viewHolder.itemView
+                val background = Paint()
+                background.color = ContextCompat.getColor(context, R.color.red)
+                if (dX > 0) {
+                    c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(), dX, itemView.bottom.toFloat(), background)
+                    val text = "Delete"
+                    val textMargin = 20
+                    val textPaint = Paint()
+                    textPaint.color = Color.WHITE
+                    textPaint.textSize = 40f
+                    c.drawText(text, itemView.left.toFloat() + textMargin +50, itemView.top.toFloat() + itemView.height.toFloat() / 2 + textMargin, textPaint)
+
+                }
+            }
+        }
+
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val binding = CartItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CartViewHolder(binding)
@@ -157,13 +207,6 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         holder.bind(position)
-    }
-
-    // get update quantity
-    fun getUpdateItemsQuantities(): MutableList<Int> {
-        val itemQuantity = mutableListOf<Int>()
-        itemQuantity.addAll(cartQuantity)
-        return itemQuantity
     }
 
 }

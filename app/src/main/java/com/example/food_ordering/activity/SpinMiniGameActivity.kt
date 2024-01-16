@@ -1,5 +1,4 @@
-package com.example.food_ordering
-import android.annotation.SuppressLint
+package com.example.food_ordering.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
@@ -10,6 +9,7 @@ import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.food_ordering.R
 
 class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
     private var count = 0

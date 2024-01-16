@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.food_ordering.DetailsActivity
+import com.example.food_ordering.activity.DetailsActivity
 import com.example.food_ordering.databinding.MenuItemBinding
 import com.example.food_ordering.model.AllItemMenu
 

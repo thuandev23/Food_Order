@@ -1,8 +1,9 @@
-package com.example.food_ordering
+package com.example.food_ordering.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
+import com.example.food_ordering.R
 
 class PolicesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

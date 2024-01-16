@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PayOutActivity">
+    tools:context=".activity.PayOutActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackPayout"
@@ -74,7 +74,8 @@
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:fontFamily="@font/lato"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -105,7 +106,8 @@
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:fontFamily="@font/lato"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -136,7 +138,8 @@
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:fontFamily="@font/lato"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -199,7 +202,7 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -214,35 +217,38 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="170dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_italic"
-                    android:text="Code Voucher"
+                    android:text="Voucher"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/codeVoucher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="add code"
+                    android:hint="code"
                     android:fontFamily="@font/lato"
                     android:textAlignment="center"
                     android:textSize="18sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnApplyVoucher"
+                    android:id="@+id/btnSelectVoucher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittextshape"
-                    android:text="Apply"
+                    android:text="Select Voucher"
                     android:textColor="@color/textColor"
                     android:textAllCaps="false"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
             </LinearLayout>
 
@@ -277,7 +283,7 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -296,15 +302,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/totalAmountVoucher" />
-            <com.paypal.checkout.paymentbutton.PaymentButtonContainer
+            <!--<com.paypal.checkout.paymentbutton.PaymentButtonContainer
                 android:id="@+id/payment_button_container"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
                 app:paypal_button_color="silver"
                 app:paypal_button_enabled="true"
                 app:paypal_button_label="pay"
                 app:paypal_button_shape="rectangle"
-                app:paypal_button_size="large" />
+                app:paypal_button_size="large" />-->
+
         </LinearLayout>
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
