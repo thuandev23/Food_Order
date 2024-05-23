@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.food_ordering.adapter.MyVoucherAdapter
@@ -43,8 +44,22 @@ class MyVoucherActivity : AppCompatActivity() {
 
         validVoucherItems = mutableListOf()
         expiredVoucherItems = mutableListOf()
-
         retrieveVoucherItem()
+
+        binding.btnVoucherValidMore.setOnClickListener {
+            if (binding.voucherValidRecyclerView.visibility == RecyclerView.VISIBLE) {
+                binding.voucherValidRecyclerView.visibility = RecyclerView.GONE
+            } else {
+                binding.voucherValidRecyclerView.visibility = RecyclerView.VISIBLE
+            }
+        }
+        binding.btnVoucherExpiredMore.setOnClickListener {
+            if (binding.voucherExpiredRecyclerView.visibility == RecyclerView.VISIBLE) {
+                binding.voucherExpiredRecyclerView.visibility = RecyclerView.GONE
+            } else {
+                binding.voucherExpiredRecyclerView.visibility = RecyclerView.VISIBLE
+            }
+        }
     }
 
     private fun retrieveVoucherItem() {
@@ -63,8 +78,10 @@ class MyVoucherActivity : AppCompatActivity() {
                     voucherItem?.let {
                         if (it.expiryDate?.let { it1 -> isVoucherExpired(it1) } == true) {
                             expiredVoucherItems.add(it)
-                        } else {
+                        } else if (it.expiryDate?.let { it1 -> isVoucherExpired(it1) } == false){
                             validVoucherItems.add(it)
+                        } else {
+                            Toast.makeText(this@MyVoucherActivity, "VoucherError Error: ${it.code}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -80,7 +97,7 @@ class MyVoucherActivity : AppCompatActivity() {
     }
     private fun isVoucherExpired(expiryDate: String): Boolean {
         val currentDateString = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-        return expiryDate < currentDateString
+        return expiryDate > currentDateString
     }
     private fun setAdapter(items: List<AllVoucher>, recyclerView: RecyclerView) {
         val adapter = MyVoucherAdapter(items, this)

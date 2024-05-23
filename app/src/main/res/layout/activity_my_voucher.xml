@@ -33,7 +33,10 @@
         android:id="@+id/voucherValidRecyclerView"
         android:layout_width="409dp"
         android:layout_height="290dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quantityValidVoucher"
@@ -45,8 +48,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Voucher expiry date"
-        android:textSize="16sp"
+        android:fontFamily="@font/lato_italic"
+        android:text="Voucher can still be used"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -54,7 +59,10 @@
         android:id="@+id/voucherExpiredRecyclerView"
         android:layout_width="409dp"
         android:layout_height="290dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quantityExpiredVoucher"
@@ -66,9 +74,29 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/lato_italic"
         android:text="Voucher out of date"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/voucherValidRecyclerView" />
+
+    <ImageView
+        android:id="@+id/btnVoucherValidMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/quantityValidVoucher"
+        app:layout_constraintStart_toEndOf="@+id/quantityValidVoucher"
+        app:layout_constraintTop_toTopOf="@+id/quantityValidVoucher"
+        app:srcCompat="@android:drawable/ic_menu_more" />
+
+    <ImageView
+        android:id="@+id/btnVoucherExpiredMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/quantityExpiredVoucher"
+        app:layout_constraintStart_toEndOf="@+id/quantityExpiredVoucher"
+        app:layout_constraintTop_toTopOf="@+id/quantityExpiredVoucher"
+        app:srcCompat="@android:drawable/ic_menu_more" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

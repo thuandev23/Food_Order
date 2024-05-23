@@ -1,5 +1,6 @@
 package com.example.food_ordering.activity
-import androidx.appcompat.app.AppCompatActivity
+
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -9,50 +10,76 @@ import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.food_ordering.R
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
     private var count = 0
     private var flag = false
     private var powerButton: ImageView? = null
+    private var interstitialAd: InterstitialAd? = null
+    private var hasWatchedAd = false
+    private var spinCount = 0
+    private val prizes = intArrayOf(20000, 15000, 60000, 50000, 10000, 12000, 30000, 18000, 40000, 30000, 16000, 25000)
+    private var mSpinDuration: Long = 0
+    private var mSpinRevolution = 0f
+    private var pointerImageView: ImageView? = null
+    private var infoText: TextView? = null
+    private var prizeText = "N/A"
+
+    // Final point of rotation defined right here
+    private val end = Math.floor(Math.random() * 3600).toInt() // random : 0-360
+    private val numOfPrizes = prizes.size // quantity of prize
+    private val degreesPerPrize = 360 / numOfPrizes // size of sector per prize in degrees
+    private val shift = 0 // shift where the arrow points
+    private val prizeIndex = (shift + end) % numOfPrizes
+
+    private lateinit var spinStartSound: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spin_mini_game)
-        /**get Id*/
+
+        // Initialize sounds
+        spinStartSound = MediaPlayer.create(this, R.raw.audiospin)
+
         powerButton = findViewById(R.id.powerButton)
         powerButton!!.setOnTouchListener(PowerTouchListener())
         intSpinner()
 
-        var btnBack = findViewById<ImageView>(R.id.btnBack)
+        val btnBack = findViewById<ImageView>(R.id.btnBack)
         btnBack.setOnClickListener { finish() }
+
+        loadAd()
     }
-
-    /**
-     * All the vars you need
-     * */
-
-    val prizes = intArrayOf(20000, 15000, 60000, 50000, 10000, 12000, 30000, 18000, 40000, 30000, 16000, 25000)
-    private var mSpinDuration: Long = 0
-    private var mSpinRevolution = 0f
-    var pointerImageView: ImageView? = null
-    var infoText: TextView? = null
-    var prizeText = "N/A"
-
-    // Final point of rotation defined right here
-    val end = Math.floor(Math.random() * 3600).toInt() // random : 0-360
-    val numOfPrizes = prizes.size // quantity of prize
-    val degreesPerPrize = 360 / numOfPrizes // size of sector per prize in degrees
-    val shift = 0 // shit where the arrow points
-    val prizeIndex = (shift + end) % numOfPrizes
 
     private fun intSpinner() {
         pointerImageView = findViewById(R.id.imageWheel)
         infoText = findViewById(R.id.infoText)
     }
-    fun startSpinner() {
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this, "YOUR_AD_UNIT_ID", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdLoaded(ad: InterstitialAd) {
+                interstitialAd = ad
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                interstitialAd = null
+            }
+        })
+    }
+
+    private fun startSpinner() {
         mSpinRevolution = 3600f
-        mSpinDuration = 5000
+        mSpinDuration = 10000
 
         if (count >= 30) {
             mSpinDuration = 1000
@@ -61,7 +88,6 @@ class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
         if (count >= 60) {
             mSpinDuration = 15000
             mSpinRevolution = (3600 * 3).toFloat()
-
         }
         prizeText = "Prize is : ${prizes[prizeIndex]}"
         val rotateAnim = RotateAnimation(
@@ -76,22 +102,23 @@ class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
         rotateAnim.fillAfter = true
         pointerImageView!!.startAnimation(rotateAnim)
 
+        // Play start sound
+        spinStartSound.start()
     }
 
-    override fun onAnimationStart(p0: Animation?) {
+    override fun onAnimationStart(animation: Animation?) {
         infoText!!.text = "Spinning..."
     }
 
-    override fun onAnimationEnd(p0: Animation?) {
+    override fun onAnimationEnd(animation: Animation?) {
         infoText!!.text = ""
-        Toast.makeText(this, "You get a value discount code : ${prizes[prizeIndex]}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "You get a value discount code: ${prizes[prizeIndex]}", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onAnimationRepeat(p0: Animation?) {}
+    override fun onAnimationRepeat(animation: Animation?) {}
 
     private inner class PowerTouchListener : View.OnTouchListener {
-        override fun onTouch(p0: View?, motionEvent: MotionEvent?): Boolean {
-
+        override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
             when (motionEvent!!.action) {
                 MotionEvent.ACTION_DOWN -> {
                     flag = true
@@ -118,13 +145,37 @@ class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
                 }
                 MotionEvent.ACTION_UP -> {
                     flag = false
-                    startSpinner()
+                    if (spinCount > 0) {
+                        if (interstitialAd != null && !hasWatchedAd) {
+                            interstitialAd!!.show(this@SpinMiniGameActivity)
+                            interstitialAd!!.fullScreenContentCallback = object : FullScreenContentCallback() {
+                                override fun onAdDismissedFullScreenContent() {
+                                    startSpinner()
+                                    loadAd()
+                                    hasWatchedAd = true
+                                }
+
+                                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                                    startSpinner()
+                                }
+                            }
+                        } else {
+                            startSpinner()
+                        }
+                    } else {
+                        startSpinner()
+                        hasWatchedAd = true
+                    }
+                    spinCount++
                     return false
                 }
-
             }
             return false
         }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        spinStartSound.release()
     }
 }

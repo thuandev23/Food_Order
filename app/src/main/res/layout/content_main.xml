@@ -38,7 +38,7 @@
             android:id="@+id/imageHill"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="100dp"
             android:src="@drawable/hill"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,14 +47,14 @@
         <ImageView
             android:id="@+id/imagePointer"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="32dp"
             android:scaleType="fitCenter"
             android:src="@drawable/pointer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/textView30" />
 
         <ImageView
             android:id="@+id/btnBack"
@@ -101,7 +101,7 @@
         android:layout_marginTop="-621dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="18dp"
-        android:text="Tap on the yellow Button"
+        android:text="Tap on the SPIN button"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"

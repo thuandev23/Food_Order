@@ -35,10 +35,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // initialize Firebase Auth
         auth = Firebase.auth
-        // initialize Firebase Database
         database = Firebase.database.reference
+
         // initialize Google SignIn
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
@@ -81,16 +80,30 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val user = auth.currentUser
-                Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                checkUserAddress()
             } else {
                 Toast.makeText(
                     this,
                     "Authentication failed: ${task.exception?.message}",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+    }
+
+    private fun checkUserAddress() {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            database.child("accounts").child("users").child(userId).child("address").get().addOnSuccessListener { snapshot ->
+                val address = snapshot.value as? String
+                if (address.isNullOrEmpty()) {
+                    startActivity(Intent(this, ChooseLocationActivity::class.java))
+                } else {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                finish()
+            }.addOnFailureListener {
+                Toast.makeText(this, "Failed to check address: ${it.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }

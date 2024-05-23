@@ -8,5 +8,5 @@ data class AllVoucher(
     val expiryDate: String? = null, // Ngày hết hạn của voucher
     val minPurchaseAmount: String? = null, // Số tiền tối thiểu cần mua để áp dụng voucher
     val maxDiscount: String? = null, // Số tiền giảm giá tối đa
-    val isUsed: Boolean = false, // Trạng thái của voucher: đã sử dụng hay chưa
+    var isUsed: Boolean = false, // Trạng thái của voucher: đã sử dụng hay chưa
 )

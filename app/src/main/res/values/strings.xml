@@ -3,4 +3,6 @@
     <string name="default_web_client_id">AIzaSyBThgOnhVZEDXIdQSllRre5w3VtLUbH6eU</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="policies">This is a sample application</string>
+    <string name="maps_api_key">AIzaSyA8HHbcGoKy54K2ArFHyBIo-D6iS5NPMYk</string>
+
 </resources>

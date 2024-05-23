@@ -1,6 +1,6 @@
 package com.example.food_ordering.activity
 
-import android.content.Context
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food_ordering.adapter.SelectVoucherAdapter
-import com.example.food_ordering.adapter.VoucherAdapter
 import com.example.food_ordering.databinding.ActivityPayOutBinding
 import com.example.food_ordering.databinding.DialogVoucherListBinding
 import com.example.food_ordering.fragment.CongratsBottomFragment
@@ -20,18 +19,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.paypal.checkout.approve.OnApprove
-import com.paypal.checkout.cancel.OnCancel
-import com.paypal.checkout.createorder.CreateOrder
-import com.paypal.checkout.createorder.CurrencyCode
-import com.paypal.checkout.createorder.OrderIntent
-import com.paypal.checkout.createorder.UserAction
-import com.paypal.checkout.error.OnError
-import com.paypal.checkout.order.Amount
-import com.paypal.checkout.order.AppContext
-import com.paypal.checkout.order.OrderRequest
-import com.paypal.checkout.order.PurchaseUnit
-import com.paypal.pyplcheckout.data.model.pojo.Content
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -57,11 +44,10 @@ class PayOutActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
 
-    private lateinit var voucherAdapter: VoucherAdapter
     private val validVoucherSelectedItems = mutableListOf<AllVoucher>()
-    private val voucherItems = ArrayList<AllVoucher>()
     private val selectedVouchers = mutableListOf<AllVoucher>()
-
+    private var previousSelectedVoucher = mutableListOf<AllVoucher>()
+    private var countVoucherSelected :Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,15 +77,6 @@ class PayOutActivity : AppCompatActivity() {
         totalAmountVoucher = calculateTotalAmount().toString() + "$"
         binding.totalAmountVoucher.isEnabled = false
         binding.totalAmountVoucher.setText(totalAmountVoucher)
-
-        /*binding.btnApplyVoucher.setOnClickListener {
-            codeVoucher = binding.codeVoucher.text.toString().trim()
-            checkCodeVoucher(codeVoucher) { result ->
-                totalAmountVoucher = "$result$"
-                binding.totalAmountVoucher.isEnabled = false
-                binding.totalAmountVoucher.setText(totalAmountVoucher)
-            }
-        }*/
 
         binding.btnSelectVoucher.setOnClickListener {
             showVoucherSelectionDialog()
@@ -156,7 +133,6 @@ class PayOutActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         val voucherRef: DatabaseReference =
             database.reference.child("accounts").child("users").child(userId).child("MyVouchers")
-
         voucherRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 validVoucherSelectedItems.clear()
@@ -173,7 +149,7 @@ class PayOutActivity : AppCompatActivity() {
 
             private fun isVoucherExpired(expiryDate: String): Boolean {
                 val currentDateString = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-                return expiryDate < currentDateString
+                return expiryDate > currentDateString
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -189,15 +165,34 @@ class PayOutActivity : AppCompatActivity() {
     private fun voucherSelectedAdapter(items: List<AllVoucher>) {
         val dialogBinding = DialogVoucherListBinding.inflate(layoutInflater)
         val dialog = AlertDialog.Builder(this).setView(dialogBinding.root).create()
+        val selectedVouchers = previousSelectedVoucher.toMutableSet()
+        countVoucherSelected = selectedVouchers.size
+        binding.countVoucher.setText("$countVoucherSelected voucher selected")
+        if (items.isEmpty()) {
+            dialogBinding.voucherRecyclerView.visibility = android.view.View.GONE
+            dialogBinding.noVoucher.visibility = android.view.View.VISIBLE
+            dialogBinding.btnApplyVoucher.setOnClickListener {
+                dialog.dismiss()
+            }
+        }else{
+            dialogBinding.voucherRecyclerView.visibility = android.view.View.VISIBLE
+            dialogBinding.noVoucher.visibility = android.view.View.GONE
+            dialogBinding.voucherRecyclerView.layoutManager = LinearLayoutManager(this)
+            dialogBinding.voucherRecyclerView.adapter = SelectVoucherAdapter(items, selectedVouchers) { voucher, isSelected ->
+                if (isSelected) {
+                    countVoucherSelected += 1
+                    selectedVouchers.add(voucher)
+                } else {
+                    countVoucherSelected -= 1
+                    selectedVouchers.remove(voucher)
+                }
+                binding.countVoucher.setText("$countVoucherSelected voucher selected")
+            }
 
-        dialogBinding.voucherRecyclerView.layoutManager = LinearLayoutManager(this)
-        dialogBinding.voucherRecyclerView.adapter = SelectVoucherAdapter(items) { voucher ->
-            if (selectedVouchers.contains(voucher)) {
-                selectedVouchers.remove(voucher)
-                //Toast.makeText(this, "Deselected: ${voucher.code}", Toast.LENGTH_SHORT).show()
-            } else {
-                selectedVouchers.add(voucher)
-                //Toast.makeText(this, "Selected: ${voucher.code}", Toast.LENGTH_SHORT).show()
+            dialogBinding.btnApplyVoucher.setOnClickListener {
+                applySelectedVouchers(selectedVouchers)
+                previousSelectedVoucher = selectedVouchers.toMutableList()
+                dialog.dismiss()
             }
         }
         dialog.setOnShowListener {
@@ -206,122 +201,44 @@ class PayOutActivity : AppCompatActivity() {
                 (resources.displayMetrics.heightPixels * 0.75).toInt()
             )
         }
-        dialogBinding.btnApplyVoucher.setOnClickListener {
-            applySelectedVouchers(selectedVouchers)
-            dialog.dismiss()
-        }
         dialog.show()
     }
 
-    private fun applySelectedVouchers(selectedVouchers: List<AllVoucher>) {
+    private fun applySelectedVouchers(selectedVouchers: MutableSet<AllVoucher>) {
         var totalAmount = calculateTotalAmount()
         val validVouchers = mutableListOf<AllVoucher>()
-
-        selectedVouchers.forEach { voucher ->
-            val expiryDateString = voucher.expiryDate
-            val dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            val expiryDate = LocalDate.parse(expiryDateString, dateFormat)
-            val currentDate = LocalDate.now()
-
-            // Check if the voucher is still valid
-            if (!expiryDate.isBefore(currentDate) || expiryDate.equals(currentDate)) {
-                validVouchers.add(voucher)
-            }
-        }
-
+        validVouchers.addAll(selectedVouchers)
         validVouchers.forEach { voucher ->
-            val minPurchaseAmount = voucher.minPurchaseAmount?.toIntOrNull() ?: 0
-            val discountAmount = voucher.discountAmount?.toIntOrNull() ?: 0
-            val maxDiscount = voucher.maxDiscount?.toIntOrNull() ?: 0
-
-            if (totalAmount >= minPurchaseAmount) {
-                // Apply the voucher's discount to the total amount, ensuring not to exceed maxDiscount
-                val discount = discountAmount.coerceAtMost(maxDiscount)
-                totalAmount -= discount
+            val minPurchaseAmountInt = voucher?.minPurchaseAmount?.toIntOrNull()
+            val discountAmountInt = voucher?.discountAmount?.toIntOrNull()
+            val maxDiscountInt = voucher?.maxDiscount?.toIntOrNull()
+            var discount =  0;
+            if (minPurchaseAmountInt != null && discountAmountInt != null && maxDiscountInt != null) {
+                if (totalAmount <= minPurchaseAmountInt) {
+                    discount = discountAmountInt
+                } else if (totalAmount > minPurchaseAmountInt) {
+                    discount = maxDiscountInt
+                }
             }
+            totalAmount -= discount;
+            // Đánh dấu voucher là đã sử dụng
+            voucher.isUsed = true
+            markVoucherAsUsed(voucher)
         }
-
-        totalAmountVoucher = "$totalAmount$"
+        totalAmountVoucher = "${totalAmount}$"
         binding.totalAmountVoucher.setText(totalAmountVoucher)
-
-        // Log for debugging
-        Log.d("applySelectedVouchers", "Total Amount after applying vouchers: $totalAmountVoucher")
     }
 
-    private fun checkCodeVoucher(codeVoucher: String, callback: (Int) -> Unit) {
-        database = FirebaseDatabase.getInstance()
+    private fun markVoucherAsUsed(voucher: AllVoucher) {
         userId = auth.currentUser?.uid ?: ""
-        val voucherRef: DatabaseReference =
-            database.reference.child("accounts").child("users").child(userId).child("MyVouchers")
-        var totalAmountApplyVoucher = 0
-
-        voucherRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var foundVoucher = false
-
-                for (voucherSnapshot in dataSnapshot.children) {
-                    val voucher = voucherSnapshot.getValue(AllVoucher::class.java)
-                    val totalAmountInt = calculateTotalAmount()
-                    val minPurchaseAmountInt = voucher?.minPurchaseAmount?.toIntOrNull()
-                    val discountAmountInt = voucher?.discountAmount?.toIntOrNull()
-                    val maxDiscountInt = voucher?.maxDiscount?.toIntOrNull()
-                    val expiryDateString = voucher?.expiryDate
-
-                    val dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                    val expiryDate = LocalDate.parse(expiryDateString, dateFormat)
-                    val currentDate = LocalDate.now()
-
-                    if (voucher?.code == codeVoucher) {
-                        if (expiryDate.isBefore(currentDate)) {
-                            Toast.makeText(
-                                this@PayOutActivity, "Voucher has expired", Toast.LENGTH_SHORT
-                            ).show()
-                        } else if (expiryDate.equals(currentDate)) {
-                            Toast.makeText(
-                                this@PayOutActivity, "Voucher will expire today", Toast.LENGTH_SHORT
-                            ).show()
-                            if (minPurchaseAmountInt != null && discountAmountInt != null && maxDiscountInt != null) {
-                                if (totalAmountInt <= minPurchaseAmountInt) {
-                                    totalAmountApplyVoucher = totalAmountInt - discountAmountInt
-                                } else if (totalAmountInt > minPurchaseAmountInt) {
-                                    totalAmountApplyVoucher = totalAmountInt - maxDiscountInt
-                                }
-                            }
-                        } else if (expiryDate.isBefore(currentDate)) {
-                            if (minPurchaseAmountInt != null && discountAmountInt != null && maxDiscountInt != null) {
-                                if (totalAmountInt <= minPurchaseAmountInt) {
-                                    totalAmountApplyVoucher = totalAmountInt - discountAmountInt
-                                } else if (totalAmountInt > minPurchaseAmountInt) {
-                                    totalAmountApplyVoucher = totalAmountInt - maxDiscountInt
-                                }
-                            }
-                        }
-                        foundVoucher = true
-                        break
-                    } else {
-                        totalAmountApplyVoucher = totalAmountInt
-                        foundVoucher = false
-                    }
-                }
-                if (!foundVoucher) {
-                    Toast.makeText(
-                        this@PayOutActivity,
-                        "You have not owned this voucher with code: $codeVoucher",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                // Pass the result to the callback
-                callback(totalAmountApplyVoucher)
+        val isUsedVoucherRef = database.reference.child("accounts").child("users").child(userId).child("MyVouchers").child(voucher.id!!)
+        isUsedVoucherRef.child("isUsed").setValue(true).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("markVoucherAsUsed", "Voucher ${voucher.code} marked as used")
+            } else {
+                Log.e("markVoucherAsUsed", "Failed to mark voucher ${voucher.code} as used")
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(
-                    this@PayOutActivity,
-                    "Error occurs when reading data from Firebase: ${databaseError.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+        }
     }
 
     private fun placeOrder() {

@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".activity.ChooseLocationActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".activity.ChooseLocationActivity">
 
         <TextView
             android:id="@+id/textView13"
@@ -32,49 +27,20 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/yeon_sung"
-            android:text="Choose Your Location "
+            android:text="Your Address "
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <!--<com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="10dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:endIconDrawable="@drawable/arrow_down"
-            app:endIconTint="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView12">
-
-            <AutoCompleteTextView
-                android:id="@+id/listOfLocation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edittextshape"
-                android:fontFamily="@font/lato"
-                android:inputType="none"
-                android:text="Choose Location" />
-        </com.google.android.material.textfield.TextInputLayout>-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="16dp"
             android:elevation="10dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:endIconDrawable="@drawable/arrow_down"
-            app:endIconTint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView12">
@@ -86,7 +52,7 @@
                 android:background="@drawable/edittextshape"
                 android:fontFamily="@font/lato"
                 android:inputType="none"
-                android:text="Choose Location" />
+                android:hint="Enter your address" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -107,10 +73,20 @@
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Google Map will be soon"
+            android:hint="Google Map will be soon"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/currentLocation"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/map" />
 </androidx.constraintlayout.widget.ConstraintLayout>
