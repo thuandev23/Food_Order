@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imgFoodPopularMenu"
+                android:id="@+id/imgFoodFavorite"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -30,18 +30,18 @@
                 tools:srcCompat="@drawable/menu7" />
 
             <TextView
-                android:id="@+id/foodNamePopularMenu"
+                android:id="@+id/foodNameFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/lato"
                 android:text="Food Name"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/imgFoodPopularMenu"
-                app:layout_constraintTop_toTopOf="@+id/imgFoodPopularMenu" />
+                app:layout_constraintStart_toEndOf="@+id/imgFoodFavorite"
+                app:layout_constraintTop_toTopOf="@+id/imgFoodFavorite" />
 
             <TextView
-                android:id="@+id/foodPricePopularMenu"
+                android:id="@+id/foodPriceFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginStart="8dp"
@@ -49,17 +49,15 @@
                 android:text="12312312"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imgFoodPopularMenu"
-                app:layout_constraintStart_toEndOf="@+id/imgFoodPopularMenu"
-                app:layout_constraintTop_toBottomOf="@+id/foodNamePopularMenu" />
+                app:layout_constraintBottom_toBottomOf="@+id/imgFoodFavorite"
+                app:layout_constraintStart_toEndOf="@+id/imgFoodFavorite"
+                app:layout_constraintTop_toBottomOf="@+id/foodNameFavorite" />
 
-            <ImageView
-                android:id="@+id/addToCartMenu"
+            <CheckBox
+                android:id="@+id/checkBoxFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:padding="10dp"
-                android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -72,8 +70,8 @@
                 android:text=" VND"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/foodPricePopularMenu"
-                app:layout_constraintTop_toTopOf="@+id/foodPricePopularMenu" />
+                app:layout_constraintStart_toEndOf="@+id/foodPriceFavorite"
+                app:layout_constraintTop_toTopOf="@+id/foodPriceFavorite" />
 
             <RatingBar
                 android:id="@+id/ratingBar"

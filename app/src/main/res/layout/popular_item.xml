@@ -10,8 +10,6 @@
         android:layout_width="380dp"
         android:layout_height="90dp"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="22dp"
-        app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,53 +36,59 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/lato"
                 android:text="Food Name"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imgFoodPopular"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/imgFoodPopular"
                 app:layout_constraintTop_toTopOf="@+id/imgFoodPopular" />
 
             <TextView
                 android:id="@+id/foodPricePopular"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/lato"
                 android:text="12312312"
                 android:textColor="@color/textColor"
-                android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/textView21"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/imgFoodPopular"
+                app:layout_constraintStart_toEndOf="@+id/imgFoodPopular"
+                app:layout_constraintTop_toBottomOf="@+id/foodNamePopular" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/addToCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/addtocartshape"
-                android:elevation="5dp"
-                android:fontFamily="@font/lato"
-                android:padding="2dp"
-                android:text="Add to cart"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView21"
-                app:layout_constraintTop_toBottomOf="@+id/foodPricePopular" />
+                android:layout_marginEnd="16dp"
+                android:padding="10dp"
+                android:src="@drawable/baseline_add_circle_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/lato"
-                android:text="VND"
+                android:text=" VND"
                 android:textColor="@color/textColor"
-                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/foodPricePopular"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/foodPricePopular"
                 app:layout_constraintTop_toTopOf="@+id/foodPricePopular" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="40dp"
+                android:numStars="5"
+                android:rating="3.8"
+                android:scaleX="0.3"
+                android:scaleY="0.3"
+                android:stepSize="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

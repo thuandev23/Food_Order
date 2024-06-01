@@ -127,12 +127,13 @@ class SignActivity : AppCompatActivity() {
                 auth.signInWithCredential(credential).addOnCompleteListener { authTask ->
                     if (authTask.isSuccessful) {
                         //successfully signIn google
+                        saveUserData()
                         Toast.makeText(
                             this,
                             "Successfully SignIn With Google",
                             Toast.LENGTH_SHORT
                         ).show()
-                        startActivity(Intent(this, MainActivity::class.java))
+                        startActivity(Intent(this, ChooseLocationActivity::class.java))
                         finish()
                     } else {
                         Toast.makeText(this, "Google SignIn failed: ${authTask.exception?.message}", Toast.LENGTH_SHORT).show()

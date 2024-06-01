@@ -1,8 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Food_Ordering</string>
+    <string name="app_name">VNFood</string>
     <string name="default_web_client_id">AIzaSyBThgOnhVZEDXIdQSllRre5w3VtLUbH6eU</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="policies">This is a sample application</string>
     <string name="maps_api_key">AIzaSyA8HHbcGoKy54K2ArFHyBIo-D6iS5NPMYk</string>
+    <string name="vietnamese_food">VietNamese Food</string>
+    <string name="your_address">Your Address</string>
+    <string name="enter_your_address">Enter your address</string>
+    <string name="next">Next</string>
+    <string name="google_map_will_be_soon">Google Map will be soon</string>
 
 </resources>
