@@ -12,18 +12,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.food_ordering.R
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
     private var count = 0
     private var flag = false
     private var powerButton: ImageView? = null
-    private var interstitialAd: InterstitialAd? = null
     private var hasWatchedAd = false
     private var spinCount = 0
     private val prizes = intArrayOf(20000, 15000, 60000, 50000, 10000, 12000, 30000, 18000, 40000, 30000, 16000, 25000)
@@ -56,27 +49,12 @@ class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
         val btnBack = findViewById<ImageView>(R.id.btnBack)
         btnBack.setOnClickListener { finish() }
 
-        loadAd()
     }
 
     private fun intSpinner() {
         pointerImageView = findViewById(R.id.imageWheel)
         infoText = findViewById(R.id.infoText)
     }
-
-    private fun loadAd() {
-        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this, "YOUR_AD_UNIT_ID", adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdLoaded(ad: InterstitialAd) {
-                interstitialAd = ad
-            }
-
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                interstitialAd = null
-            }
-        })
-    }
-
     private fun startSpinner() {
         mSpinRevolution = 3600f
         mSpinDuration = 10000
@@ -146,22 +124,8 @@ class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
                 MotionEvent.ACTION_UP -> {
                     flag = false
                     if (spinCount > 0) {
-                        if (interstitialAd != null && !hasWatchedAd) {
-                            interstitialAd!!.show(this@SpinMiniGameActivity)
-                            interstitialAd!!.fullScreenContentCallback = object : FullScreenContentCallback() {
-                                override fun onAdDismissedFullScreenContent() {
-                                    startSpinner()
-                                    loadAd()
-                                    hasWatchedAd = true
-                                }
-
-                                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                                    startSpinner()
-                                }
-                            }
-                        } else {
-                            startSpinner()
-                        }
+                        startSpinner()
+                        hasWatchedAd = true
                     } else {
                         startSpinner()
                         hasWatchedAd = true

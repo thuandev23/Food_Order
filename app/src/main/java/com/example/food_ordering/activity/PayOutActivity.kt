@@ -11,7 +11,9 @@ import com.example.food_ordering.adapter.SelectVoucherAdapter
 import com.example.food_ordering.databinding.ActivityPayOutBinding
 import com.example.food_ordering.databinding.DialogVoucherListBinding
 import com.example.food_ordering.fragment.CongratsBottomFragment
+import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.AllVoucher
+import com.example.food_ordering.model.CartItem
 import com.example.food_ordering.model.OrderDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -19,6 +21,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -57,10 +64,8 @@ class PayOutActivity : AppCompatActivity() {
         // initialize Firebase and User details
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().getReference()
-        // set User Data
-        setUserData()
-
         //get user details form firebase
+        initializeUserDetails()
 
         val intent = intent
         foodItemsName = intent.getStringArrayListExtra("foodItemName") as ArrayList<String>
@@ -131,35 +136,28 @@ class PayOutActivity : AppCompatActivity() {
     private fun showVoucherSelectionDialog() {
         userId = auth.currentUser?.uid ?: ""
         database = FirebaseDatabase.getInstance()
-        val voucherRef: DatabaseReference =
-            database.reference.child("accounts").child("users").child(userId).child("MyVouchers")
-        voucherRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                validVoucherSelectedItems.clear()
-                for (voucherSnapshot in dataSnapshot.children) {
-                    val voucherSelected = voucherSnapshot.getValue(AllVoucher::class.java)
-                    voucherSelected?.let {
-                        if (!it.expiryDate?.let { it1 -> isVoucherExpired(it1) }!!) {
-                            validVoucherSelectedItems.add(it)
-                        }
-                    }
+        val voucherRef = database.reference.child("accounts").child("users").child(userId).child("MyVouchers")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val dataSnapshot = voucherRef.get().await()
+                val validVouchers = dataSnapshot.children.mapNotNull { it.getValue(AllVoucher::class.java) }
+                    .filter { it.expiryDate?.let { expiryDate -> !isVoucherExpired(expiryDate) } == true }
+
+                withContext(Dispatchers.Main) {
+                    voucherSelectedAdapter(validVouchers)
                 }
-                voucherSelectedAdapter(validVoucherSelectedItems)
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@PayOutActivity, "Error fetching vouchers: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
+        }
+    }
 
-            private fun isVoucherExpired(expiryDate: String): Boolean {
-                val currentDateString = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-                return expiryDate > currentDateString
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(
-                    this@PayOutActivity,
-                    "Error fetching vouchers: ${databaseError.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+    private fun isVoucherExpired(expiryDate: String): Boolean {
+        val currentDateString = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+        return expiryDate <= currentDateString
     }
 
     private fun voucherSelectedAdapter(items: List<AllVoucher>) {
@@ -245,7 +243,7 @@ class PayOutActivity : AppCompatActivity() {
         userId = auth.currentUser?.uid ?: ""
         val time = System.currentTimeMillis()
         val itemPushKey = databaseReference.child("OrderDetails").push().key
-        totalAmount = totalAmountVoucher.toString()
+        totalAmount = totalAmountVoucher
         val orderDetails = OrderDetails(
             userId,
             name,
@@ -267,10 +265,40 @@ class PayOutActivity : AppCompatActivity() {
             bottomSheetDialog.show(supportFragmentManager, "Test")
             adOrderToHistory(orderDetails)
             removeItemFromCart()
+            addQuantityToPopularItems()
         }.addOnFailureListener {
             Toast.makeText(this, "Failed to order", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun addQuantityToPopularItems() {
+        for (i in 0 until foodItemsName.size) {
+            val foodName = foodItemsName[i]
+            val foodImage = foodImage[i]
+            val foodPrice = foodItemPrices[i]
+            val foodDescription = foodDescription[i]
+            val foodIngredient = foodIngredient[i]
+            val foodQuantity = foodQuantities[i]
+            val itemsSold = CartItem(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantity)
+            val popularItemsReference = databaseReference.child("ProductsSold").child(foodName)
+
+            popularItemsReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val currentQuantity = snapshot.child("foodQuantity").getValue(Int::class.java) ?: 0
+                        popularItemsReference.child("foodQuantity").setValue(currentQuantity + foodQuantity)
+                    } else {
+                        popularItemsReference.setValue(itemsSold)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "Error fetching popular items: ${error.message}")
+                }
+            })
+        }
+    }
+
 
     private fun adOrderToHistory(orderDetails: OrderDetails) {
         databaseReference.child("accounts").child("users").child(userId).child("BuyHistory")
@@ -303,30 +331,28 @@ class PayOutActivity : AppCompatActivity() {
         return totalAmount
     }
 
-    private fun setUserData() {
+    private fun initializeUserDetails() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val userId = currentUser.uid
+            userId = currentUser.uid
             val usersReference = databaseReference.child("accounts").child("users").child(userId)
+
             usersReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val names = snapshot.child("name").getValue(String::class.java) ?: ""
-                        val addresss = snapshot.child("address").getValue(String::class.java) ?: ""
-                        val phones = snapshot.child("phone").getValue(String::class.java) ?: ""
                         binding.apply {
-                            name.setText(names)
-                            address.setText(addresss)
-                            phone.setText(phones)
+                            name.setText(snapshot.child("name").getValue(String::class.java) ?: "")
+                            address.setText(snapshot.child("address").getValue(String::class.java) ?: "")
+                            phone.setText(snapshot.child("phone").getValue(String::class.java) ?: "")
                         }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.d("DatabaseUserError", "Error: ${error.message}")
+                    Log.e(TAG, "Error fetching user data: ${error.message}")
                 }
-
             })
         }
     }
+
 }

@@ -28,6 +28,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBackDetails" />
 
+    <ImageView
+        android:id="@+id/btnFavouriteDetails"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
         android:layout_width="300dp"
@@ -53,11 +63,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Short description"
-        android:textSize="18sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/foodDescriptionDetails"
@@ -66,8 +76,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Lorem ipsum dolor sit amet,  consectetur adipiscing elit,  sed do eiusmod tempor incididunt  ut labore et dolore magna aliqua. Ut enim ad"
-        android:textSize="16sp"
+        android:text="et dolore magna aliqua. Ut enim ad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView24"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
@@ -78,8 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Ingredients"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView24"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
         app:layout_constraintTop_toBottomOf="@+id/foodDescriptionDetails" />
 
     <TextView
@@ -89,24 +98,91 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textView26"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddToCart"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/addtocartshape"
         android:fontFamily="@font/yeon_sung"
         android:text="Add to Cart"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <RatingBar
+        android:id="@+id/ratingBarDetails"
+        android:layout_width="229dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="-10dp"
+        android:numStars="5"
+        android:rating="0"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        android:stepSize="0.25"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Rating:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Reviews"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView26"
+        app:layout_constraintTop_toBottomOf="@+id/foodIngredientDetails" />
+
+    <TextView
+        android:id="@+id/ratingTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="4dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/tvTotalReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="people"
+        app:layout_constraintBottom_toBottomOf="@+id/textView34"
+        app:layout_constraintStart_toEndOf="@+id/textView34"
+        app:layout_constraintTop_toBottomOf="@+id/foodIngredientDetails" />
+
+    <TextView
+        android:id="@+id/clickViewAllReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="View all reviews"
+        android:textColor="@color/textColor"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalReviews"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalReviews" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

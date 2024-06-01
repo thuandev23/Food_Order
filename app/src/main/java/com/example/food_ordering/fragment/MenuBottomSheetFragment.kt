@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.food_ordering.R
 import com.example.food_ordering.adapter.MenuAdapter
 import com.example.food_ordering.databinding.FragmentMenuBottomSheefBinding
 import com.example.food_ordering.model.AllItemMenu
@@ -17,7 +16,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class MenuBottomSheefFragment : BottomSheetDialogFragment() {
+class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMenuBottomSheefBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var menuItems: MutableList<AllItemMenu>

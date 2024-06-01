@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.food_ordering.activity.DetailsActivity
 import com.example.food_ordering.databinding.PopularItemBinding
-import com.example.food_ordering.model.AllItemMenu
+import com.example.food_ordering.model.CartItem
 
 class PopularAdapter(
-    private val menuItems: List<AllItemMenu>,
+    private val popularItems: List<CartItem>,
     private val requireContext: Context
 ) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 
@@ -28,7 +28,7 @@ class PopularAdapter(
         }
 
         private fun openDetailsActivity(position: Int) {
-            val menuItem = menuItems[position]
+            val menuItem = popularItems[position]
             val intent = Intent(requireContext, DetailsActivity::class.java).apply {
                 putExtra("menuItemName", menuItem.foodName)
                 putExtra("menuItemPrice", menuItem.foodPrice)
@@ -39,12 +39,14 @@ class PopularAdapter(
             requireContext.startActivity(intent)
         }
         fun bind(position: Int) {
-            val menuItem = menuItems[position]
+            val menuItem = popularItems[position]
             binding.apply {
                 foodNamePopular.text = menuItem.foodName
                 foodPricePopular.text = menuItem.foodPrice
                 val uri = Uri.parse(menuItem.foodImage)
                 Glide.with(requireContext).load(uri).into(imgFoodPopular)
+                imgFoodPopular.clipToOutline = true
+                isSold.text = "Sold "+menuItem.foodQuantities.toString()
             }
         }
     }
@@ -59,7 +61,7 @@ class PopularAdapter(
     }
 
     override fun getItemCount(): Int {
-        return menuItems.size
+        return popularItems.size
     }
 
     override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {

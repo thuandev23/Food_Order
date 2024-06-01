@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#-keep class java.lang.Thread {
+ #   public static java.lang.Thread currentThread();
+  #  public static boolean interrupted();
+#}

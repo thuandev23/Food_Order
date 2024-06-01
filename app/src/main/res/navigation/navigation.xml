@@ -51,6 +51,11 @@
         android:name="com.example.food_ordering.activity.MyVoucherActivity"
         android:label="activity_my_voucher"
         tools:layout="@layout/activity_my_voucher" />
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.example.food_ordering.fragment.FavouriteFragment"
+        android:label="fragment_favourite"
+        tools:layout="@layout/fragment_favourite" />
 
 
 </navigation>

@@ -1,5 +1,6 @@
 package com.example.food_ordering.fragment
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,12 +13,11 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.food_ordering.R
-import com.example.food_ordering.adapter.MenuAdapter
 import com.example.food_ordering.adapter.PopularAdapter
 import com.example.food_ordering.adapter.VoucherAdapter
 import com.example.food_ordering.databinding.FragmentHomeBinding
-import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.AllVoucher
+import com.example.food_ordering.model.CartItem
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener
 class HomeFragment : Fragment() {
     private lateinit var binding : FragmentHomeBinding
     private lateinit var database: FirebaseDatabase
-    private lateinit var menuItems: MutableList<AllItemMenu>
+    private lateinit var popularItems: MutableList<CartItem>
     private lateinit var voucherItems: MutableList<AllVoucher>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +37,11 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.txtViewMenu.setOnClickListener{
-            val bottomSheetDialog = MenuBottomSheefFragment()
+            val bottomSheetDialog = MenuBottomSheetFragment()
             bottomSheetDialog.show(parentFragmentManager, "Test")
         }
 
-        retrieveMenu()
+        retrievePopular()
         retrieveVoucher()
         return binding.root
     }
@@ -67,19 +67,25 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun retrieveMenu() {
+    private fun setVoucherAdapter() {
+        val adapter = VoucherAdapter(voucherItems, requireContext())
+        binding.voucherRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.voucherRecyclerView.adapter = adapter
+    }
+
+    private fun retrievePopular() {
         database = FirebaseDatabase.getInstance()
-        val foodRef: DatabaseReference = database.reference.child("menu")
-        menuItems = mutableListOf()
+        val foodRef: DatabaseReference = database.reference.child("ProductsSold")
+        popularItems = mutableListOf()
         //fetch data in firebase database
         foodRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                menuItems.clear()
+                popularItems.clear()
                 for (foodSnapshot in snapshot.children) {
-                    val menuItem = foodSnapshot.getValue(AllItemMenu::class.java)
-                    menuItem?.let { menuItems.add(it) }
+                    val popularItem = foodSnapshot.getValue(CartItem::class.java)
+                    popularItem?.let { popularItems.add(it)}
                 }
-                randomPopularItems()
+                bigSoldPopularItems()
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("DatabaseError", "Error: ${error.message}")
@@ -87,24 +93,44 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun setVoucherAdapter() {
-        val adapter = VoucherAdapter(voucherItems, requireContext())
-        binding.voucherRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.voucherRecyclerView.adapter = adapter
+    private fun bigSoldPopularItems() {
+        database = FirebaseDatabase.getInstance()
+        val bigSoldRef: DatabaseReference = database.reference.child("ProductsSold")
+
+        bigSoldRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val popularItemsList = mutableListOf<CartItem>()
+                for (data in snapshot.children) {
+                    val item = data.getValue(CartItem::class.java)
+                    item?.let { popularItemsList.add(it) }
+                }
+                bubbleSort(popularItemsList)
+                val subSetMenuItems = popularItemsList.take(6)
+                setPopularAdapter(subSetMenuItems)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Error fetching popular items: ${error.message}")
+            }
+        })
     }
 
-    private fun randomPopularItems() {
-        val index = menuItems.indices.toList().shuffled()
-        val numItemToShow = 6
-        val subSetMenuItems = index.take(numItemToShow).map { menuItems[it] }
-
-        setPopulerAdapter(subSetMenuItems)
-    }
-
-    private fun setPopulerAdapter(subsetmenuItems: List<AllItemMenu>) {
-        val adapter = PopularAdapter(subsetmenuItems, requireContext())
+    private fun setPopularAdapter(submenuItems: List<CartItem>) {
+        val adapter = PopularAdapter(submenuItems, requireContext())
         binding.PopularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.PopularRecyclerView.adapter = adapter
+    }
+    private fun bubbleSort(items: MutableList<CartItem>) {
+        val n = items.size
+        for(i in 0 until n-1){
+            for(j in 0 until n-i-1){
+                if(items[j].foodQuantities!! < items[j+1].foodQuantities!!){
+                    val temp = items[j]
+                    items[j] = items[j+1]
+                    items[j+1] = temp
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.food_ordering.activity.RecentOrderItemsActivity
 import com.example.food_ordering.adapter.BuyAgainAdapter
+import com.example.food_ordering.databinding.BuyAgainItemBinding
 import com.example.food_ordering.databinding.FragmentHistoryBinding
 import com.example.food_ordering.model.OrderDetails
 import com.google.firebase.auth.FirebaseAuth
@@ -48,22 +50,24 @@ class HistoryFragment : Fragment() {
         binding.recentBuyItem.setOnClickListener {
             seeItemsRecentBuy()
         }
+        retrieveBuyHistory()
         // Retrieve and display the user order history
-        if(listOfOrderItem.isEmpty()){
+        /*if(listOfOrderItem.isEmpty()){
             binding.buyAgainRecyclerView.visibility = View.GONE
             binding.recentBuyItem.visibility = View.GONE
             binding.noProductsImage.visibility = View.VISIBLE
         }
         else{
             binding.buyAgainRecyclerView.visibility = View.VISIBLE
-            binding.noProductsImage.visibility = View.GONE
             binding.recentBuyItem.visibility = View.VISIBLE
-            retrieveBuyHistory()
-        }
+            binding.noProductsImage.visibility = View.GONE
+        }*/
+
 
         binding.btnReceived.setOnClickListener {
             updateOrderDetailsToPayStatus()
         }
+
         return binding.root
     }
 
@@ -71,7 +75,6 @@ class HistoryFragment : Fragment() {
         val itemPushKey = listOfOrderItem[0].itemPushKey
         val completeOrderReference = database.reference.child("CompletedOrder").child(itemPushKey!!)
         completeOrderReference.child("paymentReceived").setValue(true)
-
     }
 
     private fun seeItemsRecentBuy() {
@@ -83,7 +86,6 @@ class HistoryFragment : Fragment() {
     }
 
     private fun retrieveBuyHistory() {
-        binding.recentBuyItem.visibility = View.INVISIBLE
         userId = auth.currentUser?.uid?:""
         val buyItemReference:DatabaseReference = database.reference.child("accounts").child("users").child(userId).child("BuyHistory")
         val shortingQuery = buyItemReference.orderByChild("currentTime")
@@ -112,47 +114,62 @@ class HistoryFragment : Fragment() {
         binding.recentBuyItem.visibility = View.VISIBLE
         val recentOrderItem = listOfOrderItem.firstOrNull()
         recentOrderItem?.let {
-            with(binding){
-                buyAgainFoodName.text = it.foodNames?.firstOrNull()?:""
-                buyAgainFoodPrice.text = it.foodPrices?.firstOrNull()?:""
-                val image = it.foodImages?.firstOrNull()?:""
-                val uri = Uri.parse(image)
-                Glide.with(requireContext()).load(uri).into(buyAgainFoodImage)
+            with(binding) {
+                val foodNames = it.foodNames?.joinToString(", ") ?: ""
+                buyAgainFoodName.text = foodNames
 
-                val isOrdersAccepted = listOfOrderItem[0].orderAccepted
-                if (isOrdersAccepted){
+                val totalPrice = it.foodPrices?.sumOf { price -> price.toDoubleOrNull() ?: 0.0 } ?: 0.0
+                buyAgainFoodPrice.text = "Total Price: $totalPrice VND"
+
+                buyAgainFoodImage.visibility = it.foodImages?.let { images ->
+                    if (images.isNotEmpty()) {
+                        val uri = Uri.parse(images[0])
+                        Glide.with(requireContext()).load(uri).into(buyAgainFoodImage)
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                } ?: View.GONE
+
+                val isOrdersAccepted = it.orderAccepted
+                if (isOrdersAccepted) {
                     orderStatus.background.setTint(Color.GREEN)
                     btnReceived.visibility = View.VISIBLE
+                } else {
+                    orderStatus.background.setTint(Color.RED)
+                    btnReceived.visibility = View.GONE
                 }
             }
         }
     }
 
+
     private fun setPreviousBuyItemsRecyclerView() {
         val buyAgainFoodName = mutableListOf<String>()
         val buyAgainFoodPrice = mutableListOf<String>()
         val buyAgainFoodImage = mutableListOf<String>()
-        for(i in 1 until listOfOrderItem.size) {
-            listOfOrderItem[i].foodNames?.firstOrNull()?.let {
-                buyAgainFoodName.add(it)
-                listOfOrderItem[i].foodPrices?.firstOrNull()?.let {
-                    buyAgainFoodPrice.add(it)
-                    listOfOrderItem[i].foodImages?.firstOrNull()?.let {
-                        buyAgainFoodImage.add(it)
+        for (order in listOfOrderItem) {
+            order.foodNames?.let { names ->
+                order.foodPrices?.let { prices ->
+                    order.foodImages?.let { images ->
+                        for (i in names.indices) {
+                            buyAgainFoodName.add(names[i])
+                            buyAgainFoodPrice.add(prices[i])
+                            buyAgainFoodImage.add(images[i])
+                        }
                     }
                 }
-
-                val rv = binding.buyAgainRecyclerView
-                rv.layoutManager = LinearLayoutManager(requireContext())
-                buyAgainAdapter = BuyAgainAdapter(
-                    buyAgainFoodName,
-                    buyAgainFoodPrice,
-                    buyAgainFoodImage,
-                    requireContext()
-                )
-                rv.adapter = buyAgainAdapter
             }
         }
+        val rv = binding.buyAgainRecyclerView
+        rv.layoutManager = LinearLayoutManager(requireContext())
+        buyAgainAdapter = BuyAgainAdapter(
+            buyAgainFoodName,
+            buyAgainFoodPrice,
+            buyAgainFoodImage,
+            requireContext()
+        )
+        rv.adapter = buyAgainAdapter
     }
 }
 
