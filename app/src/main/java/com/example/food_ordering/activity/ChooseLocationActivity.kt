@@ -56,7 +56,8 @@ class ChooseLocationActivity : AppCompatActivity() {
                 permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false)||
                         permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                     runOnUiThread {
-                        Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
                     }
                     if(isLocationEnabled()) {
                         val result =  fusedLocationClient.getCurrentLocation(
@@ -73,12 +74,13 @@ class ChooseLocationActivity : AppCompatActivity() {
                         }
                     }
                     else {
-                        Toast.makeText(this, "Please enable location", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            getString(R.string.please_enable_location), Toast.LENGTH_SHORT).show()
                         createLocationRequest()
                     }
                 }
                 else -> {
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -92,7 +94,7 @@ class ChooseLocationActivity : AppCompatActivity() {
         binding.txtNextHome.setOnClickListener {
             val address = binding.listOfLocation.text.toString()
             if (address.isEmpty()) {
-                Toast.makeText(this, "Please select address", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_select_address), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else {
                 saveAddressUser(address)
@@ -135,7 +137,7 @@ class ChooseLocationActivity : AppCompatActivity() {
         val client = LocationServices.getSettingsClient(this)
         val task = client.checkLocationSettings(builder.build())
         task.addOnSuccessListener {
-            Toast.makeText(this, "Location enabled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.location_enabled), Toast.LENGTH_SHORT).show()
         }
         task.addOnFailureListener { e->
             if (e is ResolvableApiException) {
@@ -171,7 +173,8 @@ class ChooseLocationActivity : AppCompatActivity() {
                     Log.d("TAG", "saveAddressUser: success to save address")
                 }
                 else {
-                    Toast.makeText(this, "Failed to save address", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.failed_to_save_address), Toast.LENGTH_SHORT).show()
                 }
             }
         }

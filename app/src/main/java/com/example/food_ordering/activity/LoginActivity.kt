@@ -47,9 +47,9 @@ class LoginActivity : AppCompatActivity() {
             email = binding.email.text.toString().trim()
             password = binding.password.text.toString().trim()
             if (email.isEmpty()) {
-                Toast.makeText(this, "Please fill email !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_email), Toast.LENGTH_SHORT).show()
             } else if (email.isEmpty()) {
-                Toast.makeText(this, "Please fill password !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_password), Toast.LENGTH_SHORT).show()
             } else  {
                 loginUser(email, password)
             }
@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    "Authentication failed: ${task.exception?.message}",
+                    getString(R.string.authentication_failed, task.exception?.message),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -128,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
                         //successfully signIn google
                         Toast.makeText(
                             this,
-                            "Successfully SignIn With Google",
+                            getString(R.string.successfully_signin_with_google),
                             Toast.LENGTH_SHORT
                         ).show()
                         startActivity(Intent(this, MainActivity::class.java))

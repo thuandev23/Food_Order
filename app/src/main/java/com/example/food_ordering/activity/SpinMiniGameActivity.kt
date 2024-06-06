@@ -90,7 +90,8 @@ class SpinMiniGameActivity : AppCompatActivity(), Animation.AnimationListener {
 
     override fun onAnimationEnd(animation: Animation?) {
         infoText!!.text = ""
-        Toast.makeText(this, "You get a value discount code: ${prizes[prizeIndex]}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,
+            getString(R.string.you_get_a_value_discount_code + prizes[prizeIndex]), Toast.LENGTH_SHORT).show()
     }
 
     override fun onAnimationRepeat(animation: Animation?) {}

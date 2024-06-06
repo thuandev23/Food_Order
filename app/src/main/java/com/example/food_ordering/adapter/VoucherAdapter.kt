@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.food_ordering.R
 import com.example.food_ordering.databinding.VouchersItemBinding
 import com.example.food_ordering.model.AllVoucher
 import com.google.firebase.auth.FirebaseAuth
@@ -59,7 +60,8 @@ class VoucherAdapter(
                     database.child("accounts").child("users").child(userId).child("MyVouchers").push().setValue(voucherItemNew)
                         .addOnSuccessListener {
                             // kiểm tra xem đã thêm vào voucher chưa và hiển thị cho người dùng biết là đã thêm thành công
-                            Toast.makeText(requireContext, "Item added into my voucher successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext,
+                                requireContext.getString(R.string.item_added_into_my_voucher_successfully), Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener {
                             Toast.makeText(requireContext, "Item added into my voucher failed", Toast.LENGTH_SHORT).show()
 

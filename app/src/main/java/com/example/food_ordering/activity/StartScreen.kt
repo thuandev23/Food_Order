@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.food_ordering.databinding.ActivityStartScreenBinding
+import com.example.food_ordering.setLocaleBasedOnRegion
 
 
 class StartScreen : AppCompatActivity() {
@@ -13,6 +14,10 @@ class StartScreen : AppCompatActivity() {
         ActivityStartScreenBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        setLocaleBasedOnRegion(this)
+
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 

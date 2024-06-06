@@ -1,13 +1,11 @@
 package com.example.food_ordering.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.food_ordering.R
 import com.example.food_ordering.databinding.AllVoucherItemBinding
-import com.example.food_ordering.databinding.VouchersItemBinding
 import com.example.food_ordering.model.AllVoucher
 
 class SelectVoucherAdapter(
@@ -42,7 +40,7 @@ class SelectVoucherAdapter(
             }
                 binding.root.setOnClickListener {
                     if (voucher.isUsed){
-                        Toast.makeText(binding.root.context, "This voucher has been used", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(binding.root.context,binding.root.context.getString(R.string.this_voucher_has_been_used), Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }else{
                         val isSelected = selectedVouchers.contains(voucher)

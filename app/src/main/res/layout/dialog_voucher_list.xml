@@ -15,7 +15,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/lato_bold"
-        android:text="My Vouchers: "
+        android:text="@string/my_vouchers"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
-        android:text=": Selected"
+        android:text="@string/selected"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_bold"
-        android:text=": Deselected"
+        android:text="@string/deselected"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
         android:backgroundTint="@color/textColor"
         android:fontFamily="@font/lato_bold"
         android:padding="5dp"
-        android:text="Apply"
+        android:text="@string/apply"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

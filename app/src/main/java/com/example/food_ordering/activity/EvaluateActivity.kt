@@ -4,6 +4,7 @@ import com.example.food_ordering.model.Review
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivityEvaluateBinding
 import com.example.food_ordering.model.AllItemMenu
 import com.google.firebase.auth.FirebaseAuth
@@ -84,12 +85,12 @@ class EvaluateActivity : AppCompatActivity() {
         review = binding.etReview.text.toString()
 
         if (rating == 0f) {
-            Toast.makeText(this, "Please select a rating", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_select_a_rating), Toast.LENGTH_SHORT).show()
             return
         }
 
         if (review!!.isBlank()) {
-            Toast.makeText(this, "Please enter your review", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_your_review), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -97,7 +98,7 @@ class EvaluateActivity : AppCompatActivity() {
         val idReview = database.child("menu").child(idFood!!).push().key
         database.child("menu").child(idFood!!).child("reviews").child(idReview!!).setValue(reviewData)
             .addOnSuccessListener {
-                Toast.makeText(this, "Review submitted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.review_submitted), Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {

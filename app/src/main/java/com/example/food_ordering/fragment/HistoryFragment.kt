@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.food_ordering.R
 import com.example.food_ordering.activity.RecentOrderItemsActivity
 import com.example.food_ordering.adapter.BuyAgainAdapter
 import com.example.food_ordering.databinding.BuyAgainItemBinding
@@ -119,7 +120,7 @@ class HistoryFragment : Fragment() {
                 buyAgainFoodName.text = foodNames
 
                 val totalPrice = it.foodPrices?.sumOf { price -> price.toDoubleOrNull() ?: 0.0 } ?: 0.0
-                buyAgainFoodPrice.text = "Total Price: $totalPrice VND"
+                buyAgainFoodPrice.text = getString(R.string.total_price_vnd ) + totalPrice + "VND"
 
                 buyAgainFoodImage.visibility = it.foodImages?.let { images ->
                     if (images.isNotEmpty()) {

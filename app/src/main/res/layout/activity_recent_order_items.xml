@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="Recent Buy Items"
+        android:text="@string/recent_buy_items"
         android:textColor="@color/textColor"
         android:textSize="24sp"
         android:textStyle="bold"

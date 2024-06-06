@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.net.Uri
+import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -163,17 +164,18 @@ class CartAdapter(
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 AlertDialog.Builder(context)
-                    .setTitle("Delete Confirmation")
-                    .setMessage("Are you sure you want to delete this ${cartItems[position]}?")
-                    .setPositiveButton("Yes") { _, _ ->
+                    .setTitle(context.getString(R.string.delete_confirmation))
+                    .setMessage(context.getString(R.string.delete_message) + cartItems[position])
+                    .setPositiveButton(context.getString(R.string.yes)) { _, _ ->
                         deleteItem(position) // Uncomment and implement this method
-                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
                     }
-                    .setNegativeButton("No") { _, _ ->
+                    .setNegativeButton(context.getString(R.string.no)) { _, _ ->
                         // Revert swipe
                         notifyItemChanged(viewHolder.adapterPosition)
                     }
                     .show()
+
             }
 
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
@@ -183,7 +185,7 @@ class CartAdapter(
                 background.color = ContextCompat.getColor(context, R.color.red)
                 if (dX > 0) {
                     c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(), dX, itemView.bottom.toFloat(), background)
-                    val text = "Delete"
+                    val text = context.getString(R.string.delete)
                     val textMargin = 20
                     val textPaint = Paint()
                     textPaint.color = Color.WHITE

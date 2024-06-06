@@ -59,11 +59,11 @@ class SignActivity : AppCompatActivity() {
             password = binding.password.text.toString().trim()
 
             if (username.isBlank() ) {
-                Toast.makeText(this, "Please fill username", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_username), Toast.LENGTH_SHORT).show()
             } else if (email.isBlank() ) {
-                Toast.makeText(this, "Please fill email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_email), Toast.LENGTH_SHORT).show()
             } else if (password.isBlank()) {
-                Toast.makeText(this, "Please fill password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_password), Toast.LENGTH_SHORT).show()
             } else {
                 createNewAccount(email, password)
             }
@@ -93,7 +93,8 @@ class SignActivity : AppCompatActivity() {
     private fun createNewAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.account_created_successfully), Toast.LENGTH_SHORT).show()
                 saveUserData()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -130,7 +131,7 @@ class SignActivity : AppCompatActivity() {
                         saveUserData()
                         Toast.makeText(
                             this,
-                            "Successfully SignIn With Google",
+                            getString(R.string.successfully_signin_with_google),
                             Toast.LENGTH_SHORT
                         ).show()
                         startActivity(Intent(this, ChooseLocationActivity::class.java))

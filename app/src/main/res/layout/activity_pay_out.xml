@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="Details Payout"
+        android:text="@string/details_payout"
         android:textColor="@color/textColor"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -62,7 +62,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/yeon_sung"
-                    android:text="Name"
+                    android:text="@string/name_detail"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -94,7 +94,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/yeon_sung"
-                    android:text="Address"
+                    android:text="@string/address_detail"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -126,7 +126,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/yeon_sung"
-                    android:text="Phone"
+                    android:text="@string/phone_detail"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -158,7 +158,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_italic"
-                    android:text="Payment Method"
+                    android:text="@string/payment_method_detail"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -188,7 +188,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_italic"
-                    android:text="Total"
+                    android:text="@string/total_detail"
                     android:textSize="18sp" />
 
                 <TextView
@@ -222,7 +222,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_italic"
-                    android:text="Voucher"
+                    android:text="@string/voucher"
                     android:textSize="18sp" />
 
                 <TextView
@@ -232,7 +232,7 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="0 voucher selected"
+                    android:hint="@string/_0_voucher_selected"
                     android:fontFamily="@font/lato"
                     android:textAlignment="center"
                     android:textSize="14sp" />
@@ -242,7 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittextshape"
-                    android:text="Select Voucher"
+                    android:text="@string/select_voucher"
                     android:textColor="@color/textColor"
                     android:textAllCaps="false"
                     android:textSize="14sp"
@@ -269,7 +269,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_italic"
-                    android:text="Total Amount"
+                    android:text="@string/total_amount"
                     android:textSize="18sp" />
 
                 <TextView
@@ -294,7 +294,7 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/proceedbutonshape"
                 android:fontFamily="@font/yeon_sung"
-                android:text="Place My Order"
+                android:text="@string/place_my_order"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"

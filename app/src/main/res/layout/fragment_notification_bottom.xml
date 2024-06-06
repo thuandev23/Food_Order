@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/yeon_sung"
-            android:text="Notification"
+            android:text="@string/notification"
             android:textAlignment="center"
             android:textColor="@color/textColor"
             android:textSize="24sp"

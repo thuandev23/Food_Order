@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.food_ordering.R
 import com.example.food_ordering.adapter.FavouriteAdapter
 import com.example.food_ordering.databinding.FragmentFavouriteBinding
 import com.example.food_ordering.model.AllItemMenu
@@ -103,7 +104,8 @@ class FavouriteFragment : Fragment(), FavouriteAdapter.OnItemSelectedListener {
             )
             databaseReference.child("accounts").child("users").child(userId).child("CartItems").push().setValue(addFavouriteToCartItem)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Added to cart successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.added_to_cart_successfully), Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Item added into cart failed", Toast.LENGTH_SHORT).show()
                 }
@@ -123,7 +125,8 @@ class FavouriteFragment : Fragment(), FavouriteAdapter.OnItemSelectedListener {
                             it.ref.removeValue().addOnFailureListener { exception ->
                                 Log.d("DatabaseError", "Error: ${exception.message}")
                             }.addOnSuccessListener {
-                                Toast.makeText(requireContext(), "Deleted successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),
+                                    getString(R.string.deleted_successfully), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

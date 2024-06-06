@@ -104,7 +104,8 @@ class DetailsActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@DetailsActivity, "Failed to fetch additional details: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DetailsActivity,
+                    getString(R.string.failed_to_fetch_additional_details, error.message), Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -133,7 +134,7 @@ class DetailsActivity : AppCompatActivity() {
                 else {
                     binding.ratingBarDetails.rating = 0f
                     binding.ratingTotal.text = ""
-                    binding.tvTotalReviews.text = "(0 reviews)"
+                    binding.tvTotalReviews.text = getString(R.string._0_reviews)
                 }
             }
 
@@ -194,13 +195,14 @@ class DetailsActivity : AppCompatActivity() {
                     isFavourite = true
                     updateFavouriteButton()
                     AlertDialog.Builder(this@DetailsActivity).apply {
-                        setTitle("Success")
-                        setMessage("Do you want to add to the Cart?")
-                        setPositiveButton("Yes") { _, _ ->
+                        setTitle(getString(R.string.success))
+                        setMessage(getString(R.string.add_to_cart_question))
+                        setPositiveButton(getString(R.string.yes)) { _, _ ->
                             addItemToCart()
                         }
-                        setNegativeButton("No") { _, _ -> }
+                        setNegativeButton(getString(R.string.no)) { _, _ -> }
                     }.create().show()
+
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -224,7 +226,8 @@ class DetailsActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 isFavourite = false
                                 updateFavouriteButton()
-                                Toast.makeText(this@DetailsActivity, "Removed from favourites", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@DetailsActivity,
+                                    getString(R.string.removed_from_favourites), Toast.LENGTH_SHORT).show()
                             }
                             .addOnFailureListener {
                                 Toast.makeText(this@DetailsActivity, "Remove from favourite failed: ${it.message}", Toast.LENGTH_SHORT).show()
@@ -253,7 +256,8 @@ class DetailsActivity : AppCompatActivity() {
         )
         database.child("accounts").child("users").child(userId).child("CartItems").push().setValue(cartItem)
             .addOnSuccessListener {
-                Toast.makeText(this, "Item added into cart successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.item_added_into_cart_successfully), Toast.LENGTH_SHORT).show()
                 finish()
             }.addOnFailureListener {
                 Toast.makeText(this, "Item added into cart failed", Toast.LENGTH_SHORT).show()

@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.food_ordering.R
 import com.example.food_ordering.adapter.SelectVoucherAdapter
 import com.example.food_ordering.databinding.ActivityPayOutBinding
 import com.example.food_ordering.databinding.DialogVoucherListBinding
@@ -92,7 +93,7 @@ class PayOutActivity : AppCompatActivity() {
             address = binding.address.text.toString().trim()
             phone = binding.phone.text.toString().trim()
             if (name.isBlank() && address.isBlank() && phone.isBlank()) {
-                Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_all_details), Toast.LENGTH_SHORT).show()
             } else {
                 placeOrder()
             }
@@ -165,7 +166,7 @@ class PayOutActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this).setView(dialogBinding.root).create()
         val selectedVouchers = previousSelectedVoucher.toMutableSet()
         countVoucherSelected = selectedVouchers.size
-        binding.countVoucher.setText("$countVoucherSelected voucher selected")
+        binding.countVoucher.setText(countVoucherSelected.toString() + getString(R.string.voucher_selected))
         if (items.isEmpty()) {
             dialogBinding.voucherRecyclerView.visibility = android.view.View.GONE
             dialogBinding.noVoucher.visibility = android.view.View.VISIBLE
@@ -184,7 +185,7 @@ class PayOutActivity : AppCompatActivity() {
                     countVoucherSelected -= 1
                     selectedVouchers.remove(voucher)
                 }
-                binding.countVoucher.setText("$countVoucherSelected voucher selected")
+                binding.countVoucher.setText(countVoucherSelected.toString() + getString(R.string.voucher_selected))
             }
 
             dialogBinding.btnApplyVoucher.setOnClickListener {

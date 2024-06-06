@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
                     userReference.setValue(userData).addOnSuccessListener {
                         Toast.makeText(
                             requireContext(),
-                            "Profile update successfully !",
+                            getString(R.string.profile_update_successfully),
                             Toast.LENGTH_SHORT
                         ).show()
                     }.addOnFailureListener {

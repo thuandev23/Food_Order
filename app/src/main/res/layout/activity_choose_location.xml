@@ -14,7 +14,7 @@
             android:layout_marginBottom="100dp"
             android:padding="15dp"
             android:fontFamily="@font/lato"
-            android:text="To provide you with the best dining experience, we need your permission to access your device's location. By enabling location services, we can offer personalized restaurant recommendations, accurate delivery estimates, and ensure a seamless food delivery experience.&quot;"
+            android:text="@string/Provide"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
