@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MyVoucherActivity">
+    tools:context=".view.activity.MyVoucherActivity">
 
     <TextView
         android:id="@+id/textView12"
@@ -13,7 +13,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="All my voucher"
+        android:text="@string/all_my_voucher"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgBtnBack"
@@ -49,7 +49,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_italic"
-        android:text="Voucher can still be used"
+        android:text="@string/voucher_can_still_be_used"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_italic"
-        android:text="Voucher out of date"
+        android:text="@string/voucher_out_of_date"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

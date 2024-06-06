@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:gravity="center"
-    tools:context=".fragment.MenuBottomSheetFragment">
+    tools:context=".view.fragment.MenuBottomSheetFragment">
 
     <ImageButton
         android:id="@+id/btnBackMenu"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="All Menu"
+        android:text="@string/all_menu"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

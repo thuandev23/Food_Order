@@ -13,6 +13,7 @@ class OrderDetails(): Serializable {
     var phoneNumber:String ?= null
     var orderAccepted:Boolean = false
     var paymentReceived:Boolean = false
+    var payToMerchant:Boolean = false
     var itemPushKey:String ?= null
     var currentTime:Long = 0
     var foodNames:MutableList<String> ?= null
@@ -28,6 +29,7 @@ class OrderDetails(): Serializable {
         phoneNumber = parcel.readString()
         orderAccepted = parcel.readByte() != 0.toByte()
         paymentReceived = parcel.readByte() != 0.toByte()
+        payToMerchant = parcel.readByte() != 0.toByte()
         itemPushKey = parcel.readString()
         currentTime = parcel.readLong()
     }
@@ -44,8 +46,9 @@ class OrderDetails(): Serializable {
         phone: String,
         time: Long,
         itemPushKey: String?,
-        b1: Boolean,
-        b2: Boolean
+        orderAccepted: Boolean,
+        paymentReceived: Boolean,
+        payToMerchant: Boolean
     ) : this(){
         this.userUId = userId
         this.userName = name
@@ -60,6 +63,7 @@ class OrderDetails(): Serializable {
         this.itemPushKey = itemPushKey
         this.orderAccepted = orderAccepted
         this.paymentReceived = paymentReceived
+        this.payToMerchant = payToMerchant
 
     }
 
@@ -71,6 +75,7 @@ class OrderDetails(): Serializable {
         parcel.writeString(phoneNumber)
         parcel.writeByte(if (orderAccepted) 1 else 0)
         parcel.writeByte(if (paymentReceived) 1 else 0)
+        parcel.writeByte(if (payToMerchant) 1 else 0)
         parcel.writeString(itemPushKey)
         parcel.writeLong(currentTime)
     }

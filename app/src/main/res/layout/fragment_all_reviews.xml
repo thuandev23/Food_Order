@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:gravity="center"
-    tools:context=".fragment.AllReviewsFragment">
+    tools:context=".view.fragment.AllReviewsFragment">
 
     <ImageButton
         android:id="@+id/btnBackDetails"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="All Review"
+        android:text="@string/all_review"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

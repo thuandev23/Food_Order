@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.AboutUserFragment">
+    tools:context=".view.fragment.AboutUserFragment">
 
 
     <TextView
@@ -17,7 +17,7 @@
         android:fontFamily="@font/yeon_sung"
         android:paddingLeft="10dp"
         android:paddingTop="12dp"
-        android:text="Developer Notice"
+        android:text="@string/developer_notice"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/feedback"
         app:layout_constraintTop_toBottomOf="@+id/feedback" />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="Nguyễn văn Thuận"
+        android:text="@string/nguy_n_v_n_thu_n"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/phoneUser"
         app:layout_constraintStart_toEndOf="@+id/cardView5"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="0393332493"
+        android:text="@string/_0393332493"
         app:layout_constraintBottom_toBottomOf="@+id/cardView5"
         app:layout_constraintStart_toEndOf="@+id/cardView5"
         app:layout_constraintTop_toBottomOf="@+id/nameUser" />
@@ -73,7 +73,7 @@
         android:fontFamily="@font/yeon_sung"
         android:paddingLeft="10dp"
         android:paddingTop="12dp"
-        android:text="Account Information"
+        android:text="@string/account_information"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView5" />
@@ -88,13 +88,12 @@
         android:fontFamily="@font/yeon_sung"
         android:paddingLeft="10dp"
         android:paddingTop="12dp"
-        android:text="My Vouchers"
+        android:text="@string/my_vouchers"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/accInformation"
         app:layout_constraintTop_toBottomOf="@+id/accInformation" />
-
     <TextView
-        android:id="@+id/policies"
+        android:id="@+id/myTransactionHistory"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -103,10 +102,24 @@
         android:fontFamily="@font/yeon_sung"
         android:paddingLeft="10dp"
         android:paddingTop="12dp"
-        android:text="Policies"
+        android:text="@string/transaction_history"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/myVoucher"
         app:layout_constraintTop_toBottomOf="@+id/myVoucher" />
+    <TextView
+        android:id="@+id/policies"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/proceedbutonshape"
+        android:fontFamily="@font/yeon_sung"
+        android:paddingLeft="10dp"
+        android:paddingTop="12dp"
+        android:text="@string/policieshort"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/myTransactionHistory"
+        app:layout_constraintTop_toBottomOf="@+id/myTransactionHistory"  />
 
     <TextView
         android:id="@+id/feedback"
@@ -118,7 +131,7 @@
         android:fontFamily="@font/yeon_sung"
         android:paddingLeft="10dp"
         android:paddingTop="12dp"
-        android:text="Feedback"
+        android:text="@string/feedback"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/policies"
         app:layout_constraintTop_toBottomOf="@+id/policies" />
@@ -129,7 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/yeon_sung"
-        android:text="Logout"
+        android:text="@string/logout"
         android:textColor="#F44336"
         android:textSize="20sp"
         android:padding="10dp"

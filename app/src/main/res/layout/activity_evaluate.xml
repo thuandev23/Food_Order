@@ -8,12 +8,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".activity.EvaluateActivity">
+    tools:context=".view.activity.EvaluateActivity">
     <TextView
         android:id="@+id/tvFoodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Food Name"
+        android:text="@string/food_name"
         android:textSize="18sp"
         android:textStyle="bold"
         android:fontFamily="@font/lato"
@@ -26,13 +26,14 @@
         android:numStars="5"
         android:rating="3.8"
         android:stepSize="0.5"
+        android:progressTint="#FFE719"
         android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/etReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Write your review"
+        android:hint="@string/write_your_review"
         android:inputType="textMultiLine"
         android:minHeight="100dp"
         android:gravity="top"
@@ -42,5 +43,5 @@
         android:id="@+id/btnSubmitReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit Review"/>
+        android:text="@string/submit_review"/>
 </LinearLayout>

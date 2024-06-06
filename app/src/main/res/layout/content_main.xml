@@ -8,7 +8,7 @@
     android:background="@color/color_primary_dark"
     android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.MainActivity"
+    tools:context=".view.activity.MainActivity"
     android:gravity="center"
     tools:showIn="@layout/activity_spin_mini_game">
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/yeon_sung"
-            android:text="You have one time to have the opportunity to get a discount code"
+            android:text="@string/recomment"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -101,7 +101,7 @@
         android:layout_marginTop="-621dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="18dp"
-        android:text="Tap on the SPIN button"
+        android:text="@string/tap_on_the_spin_button"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"

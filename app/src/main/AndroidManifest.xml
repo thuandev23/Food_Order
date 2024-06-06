@@ -2,13 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_ADM_MESSAGES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_TASK_LIST" />
 
     <application
-        android:name=".model.AppPay"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,41 +22,40 @@
         android:theme="@style/Theme.Food_Ordering"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity android:name=".view.activity.EvaluateActivity"
+            android:exported="true"/>
         <activity
-            android:name=".activity.EvaluateActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.SpinMiniGameActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.MyVoucherActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.PolicesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.RecentOrderItemsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.DetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.PayOutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.ChooseLocationActivity"
+            android:name=".view.activity.SpinMiniGameActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.SignActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.LoginActivity"
+            android:name=".view.activity.MyVoucherActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.StartScreen"
+            android:name=".view.activity.PolicesActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.SplashScreen"
+            android:name=".view.activity.RecentOrderItemsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.DetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.PayOutActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.ChooseLocationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.SignActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.StartScreen"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,13 +64,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
     </application>
 
 </manifest>
