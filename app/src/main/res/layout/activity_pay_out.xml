@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.PayOutActivity">
+    tools:context=".activity.PayOutActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackPayout"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/arrow_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,6 +20,7 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/yeon_sung"
         android:text="@string/details_payout"
         android:textColor="@color/textColor"
@@ -52,7 +53,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/profileedittextshape"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -62,7 +63,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/yeon_sung"
                     android:text="@string/name_detail"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/name"
@@ -83,7 +85,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/profileedittextshape"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -93,13 +95,14 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/yeon_sung"
                     android:text="@string/address_detail"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minHeight="56dp"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:fontFamily="@font/lato"
@@ -114,7 +117,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/profileedittextshape"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -124,7 +127,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/yeon_sung"
                     android:text="@string/phone_detail"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/phone"
@@ -141,36 +145,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:orientation="vertical"
-                android:elevation="1dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/profileedittextshape">
+                android:background="@drawable/profileedittextshape"
+                android:elevation="2dp"
+                android:gravity="center_vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/profileedittextshape"
-                    android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_italic"
+                    android:text="@string/payment_method_detail"
+                    android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/textViewPaymentMethod"
-                        android:layout_width="170dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/lato_italic"
-                        android:text="@string/payment_method_detail"
-                        android:textSize="18sp" />
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/cashondelivery" />
 
-                    <ImageView
-                        android:id="@+id/imageViewMethodPay"
-                        android:layout_width="250dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cashondelivery" />
-                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -181,7 +179,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/profileedittextshape"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -215,7 +213,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/profileedittextshape"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -262,7 +260,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/profileedittextshape"
-                android:elevation="1dp"
+                android:elevation="2dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -294,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
                 android:layout_marginBottom="15dp"
-                android:background="@drawable/edittextshape"
+                android:background="@drawable/proceedbutonshape"
                 android:fontFamily="@font/yeon_sung"
                 android:text="@string/place_my_order"
                 android:textAllCaps="false"
@@ -304,7 +302,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/totalAmountVoucher" />
-
+            <!--<com.paypal.checkout.paymentbutton.PaymentButtonContainer
+                android:id="@+id/payment_button_container"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                app:paypal_button_color="silver"
+                app:paypal_button_enabled="true"
+                app:paypal_button_label="pay"
+                app:paypal_button_shape="rectangle"
+                app:paypal_button_size="large" />-->
 
         </LinearLayout>
 

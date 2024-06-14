@@ -6,12 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.RECEIVE_ADM_MESSAGES" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.GET_TASK_LIST" />
-
     <application
+        android:name=".model.AppPay"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,40 +18,40 @@
         android:theme="@style/Theme.Food_Ordering"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity android:name=".view.activity.EvaluateActivity"
-            android:exported="true"/>
+        <activity android:name=".activity.EvaluateActivity"
+            android:exported="false"/>
         <activity
-            android:name=".view.activity.SpinMiniGameActivity"
+            android:name=".activity.SpinMiniGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MyVoucherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PolicesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RecentOrderItemsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PayOutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ChooseLocationActivity"
             android:exported="true" />
         <activity
-            android:name=".view.activity.MyVoucherActivity"
+            android:name=".activity.SignActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".view.activity.PolicesActivity"
+            android:name=".activity.StartScreen"
             android:exported="true" />
         <activity
-            android:name=".view.activity.RecentOrderItemsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.DetailsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.PayOutActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.ChooseLocationActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.SignActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.StartScreen"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity.SplashScreen"
+            android:name=".activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
 

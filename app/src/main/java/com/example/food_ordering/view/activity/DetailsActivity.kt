@@ -1,4 +1,4 @@
-package com.example.food_ordering.view.activity
+package com.example.food_ordering.activity
 
 import com.example.food_ordering.model.Review
 import android.app.AlertDialog
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivityDetailsBinding
-import com.example.food_ordering.view.fragment.AllReviewsFragment
+import com.example.food_ordering.fragment.AllReviewsFragment
 import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.CartItem
 import com.google.firebase.auth.FirebaseAuth

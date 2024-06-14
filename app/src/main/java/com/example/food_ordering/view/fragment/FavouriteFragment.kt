@@ -1,4 +1,4 @@
-package com.example.food_ordering.view.fragment
+package com.example.food_ordering.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food_ordering.R
-import com.example.food_ordering.view.adapter.FavouriteAdapter
+import com.example.food_ordering.adapter.FavouriteAdapter
 import com.example.food_ordering.databinding.FragmentFavouriteBinding
 import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.CartItem
