@@ -9,10 +9,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivityMainBinding
 import com.example.food_ordering.view.fragment.DialogUpdateUserFragment
-import com.example.food_ordering.view.fragment.FavouriteFragment
 import com.example.food_ordering.view.fragment.NotificationBottomFragment
-import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.UserModel
+import com.example.food_ordering.view.fragment.WeatherDialogFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         binding.favorite.setOnClickListener {
             navController.navigate(R.id.favouriteFragment)
         }
+
     }
 
     private fun getItemFromFavorite() {
@@ -84,6 +84,9 @@ class MainActivity : AppCompatActivity() {
                         if(userProfile.name == ""|| userProfile.address == ""|| userProfile.email == ""|| userProfile.phone == "") {
                                 val updateInfoDialog = DialogUpdateUserFragment()
                                 updateInfoDialog.show(supportFragmentManager.beginTransaction(), "UpdateInfoDialog")
+                        }else{
+                            val weatherDialog = WeatherDialogFragment()
+                            weatherDialog.show(supportFragmentManager.beginTransaction(), "WeatherDialog")
                         }
                     }
                 }

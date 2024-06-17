@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.food_ordering.R
-import com.example.food_ordering.view.activity.DetailsActivity
+import com.example.food_ordering.activity.DetailsActivity
 import com.example.food_ordering.databinding.PopularItemBinding
 import com.example.food_ordering.model.CartItem
 

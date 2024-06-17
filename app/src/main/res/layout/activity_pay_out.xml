@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PayOutActivity">
+    tools:context=".view.activity.PayOutActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackPayout"
@@ -143,6 +143,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/payment_method"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginLeft="10dp"
@@ -162,7 +163,7 @@
                     android:textSize="18sp" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imgViewCashOnDelivery"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

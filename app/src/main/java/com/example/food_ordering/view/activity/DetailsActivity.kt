@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivityDetailsBinding
-import com.example.food_ordering.fragment.AllReviewsFragment
 import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.CartItem
+import com.example.food_ordering.view.fragment.AllReviewsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.coroutines.CoroutineScope

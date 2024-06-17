@@ -16,6 +16,7 @@ import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import com.example.food_ordering.R
 import com.example.food_ordering.databinding.ActivityChooseLocationBinding
 import com.example.food_ordering.model.UserModel
+import com.example.food_ordering.view.activity.MainActivity
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest

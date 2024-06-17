@@ -132,4 +132,12 @@
     <string name="purchase_code">Mã đơn hàng: %1$s</string>
     <string name="success_paid">Thành công</string>
     <string name="not_paid">Thất bại</string>
+    <string name="it_s_quite_hot_today_how_about_a_nice_cool_dry_dish">Hôm nay trời khá nóng.\n Bạn nghĩ như thế nào về món ăn nước ?</string>
+    <string name="it_s_chilly_outside_a_warm_dish_with_broth_would_be_perfect">Bên ngoài khá lạnh. \nMột món ăn ấm với nước dùng sẽ là hoàn hảo.</string>
+    <string name="the_weather_is_moderate_you_can_enjoy_either_a_dish_with_broth_or_a_dry_dish">Thời tiết vừa phải. \n Bạn có thể thưởng thức một món ăn với nước dùng hoặc một món ăn khô.</string>
+    <string name="weather">Thời tiết hôm nay </string>
+    <string name="current_temperature">Nhiệt độ hiện tại: </string>
+    <string name="c_weather">°C</string>
+    <string name="suggestion" >\n\nGợi ý \n</string>
+    <string name="_api">91e251c5758236ae03485dc5fa6b8fea</string>
 </resources>

@@ -133,4 +133,12 @@
     <string name="purchase_code">Purchase Code: %1$s</string>
     <string name="success_paid">Success Paid</string>
     <string name="not_paid">Not Paid</string>
+    <string name="it_s_quite_hot_today_how_about_a_nice_cool_dry_dish">It\'s quite hot today. \nHow about a nice cool dry dish ?</string>
+    <string name="it_s_chilly_outside_a_warm_dish_with_broth_would_be_perfect">It\'s chilly outside.\n A warm dish with broth  would be perfect.</string>
+    <string name="the_weather_is_moderate_you_can_enjoy_either_a_dish_with_broth_or_a_dry_dish">The weather is moderate. \nYou can enjoy either a dish with broth or a dry dish.</string>
+    <string name="weather">Weather</string>
+    <string name="current_temperature">Current Temperature:</string>
+    <string name="c_weather">°C</string>
+    <string name="suggestion">\n\nSuggestion  \n</string>
+    <string name="_api">91e251c5758236ae03485dc5fa6b8fea</string>
 </resources>

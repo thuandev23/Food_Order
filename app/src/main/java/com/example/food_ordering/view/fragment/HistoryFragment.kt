@@ -111,8 +111,8 @@ class HistoryFragment : Fragment() {
                 val foodNames = it.foodNames?.joinToString(", ") ?: ""
                 buyAgainFoodName.text = foodNames
 
-                val totalPrice = it.foodPrices?.sumOf { price -> price.toDoubleOrNull() ?: 0.0 } ?: 0.0
-                buyAgainFoodPrice.text = getString(R.string.total_price_vnd ) + totalPrice
+                val totalPrice = it.totalPrice
+                buyAgainFoodPrice.text = getString(R.string.total_price_vnd ) + totalPrice +"VND"
 
                 buyAgainFoodImage.visibility = it.foodImages?.let { images ->
                     if (images.isNotEmpty()) {

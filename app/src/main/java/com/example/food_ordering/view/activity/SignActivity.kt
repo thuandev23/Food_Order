@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.food_ordering.R
+import com.example.food_ordering.activity.ChooseLocationActivity
 import com.example.food_ordering.databinding.ActivitySignBinding
 import com.example.food_ordering.viewmodel.SignViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn

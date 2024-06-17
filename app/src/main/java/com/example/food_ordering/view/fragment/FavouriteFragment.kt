@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food_ordering.R
-import com.example.food_ordering.adapter.FavouriteAdapter
 import com.example.food_ordering.databinding.FragmentFavouriteBinding
 import com.example.food_ordering.model.AllItemMenu
 import com.example.food_ordering.model.CartItem
+import com.example.food_ordering.view.adapter.FavouriteAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 

@@ -111,7 +111,7 @@ class PayOutActivity : AppCompatActivity() {
         // ZaloPay SDK Init
         ZaloPaySDK.init(2553, Environment.SANDBOX)
 
-        binding.textViewPaymentMethod.setOnClickListener {
+        binding.paymentMethod.setOnClickListener {
             showPaymentMethodsDialog()
         }
     }
@@ -124,7 +124,7 @@ class PayOutActivity : AppCompatActivity() {
             .setTitle("Chọn phương thức thanh toán")
             .setItems(paymentMethods) { dialog, which ->
                 val selectedMethod = paymentMethods[which]
-                binding.imageViewMethodPay.setImageResource(paymentMethodImages[which])
+                binding.imgViewCashOnDelivery.setImageResource(paymentMethodImages[which])
                 payToMerchant = if (selectedMethod == "ZaloPay") { true } else { false }
             }
             .create()
